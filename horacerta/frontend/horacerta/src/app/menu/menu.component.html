@@ -1,0 +1,128 @@
+<aside class="main-sidebar">
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel">
+      <div class="pull-left image">
+        <img src="../../assets/imagens/avatar.png" class="img-circle" alt="User Image">
+      </div>
+      <div class="pull-left info">
+        <p>Pedro Ribeiro</p>
+        Desenvolvedor Júnior
+        <br/>
+        <br/>
+        <a routerLink="/dashboard">
+          <i class="fa fa-circle text-success"></i> Online</a>
+      </div>
+    </div>
+    <!-- search form -->
+    <form action="#" method="get" class="sidebar-form">
+      <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Search...">
+        <span class="input-group-btn">
+          <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+            <i class="fa fa-search"></i>
+          </button>
+        </span>
+      </div>
+    </form>
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+      <li class="header">Menu</li>
+
+      <li class="treeview">
+        <a href="#">
+          <i class="ion ion-ios-people"></i>
+          <span>Perfil</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li>
+            <a *ngFor="let c of clientes" (click)="setCliente(c)" routerLink="">
+              <i class="fa fa-circle-o"></i> </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="active">
+        <a routerLink="/dashboard">
+          <i class="ion ion-speedometer"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <!-- <li class="treeview">
+          <a href="#">
+            <i class="ion ion-pie-graph"></i>
+            <span>Gráficos</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
+            <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
+            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
+            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+          </ul>
+        </li> -->
+
+
+      <li class="treeview">
+        <a href="#">
+          <i class="ion ion-paper-airplane"></i>
+          <span>Envio/Retorno</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li>
+            <a routerLink="/envio/venda">
+              <i class="fa fa-circle-o"></i> Envio de Vendas</a>
+          </li>
+          <li>
+            <a routerLink="/retorno/venda">
+              <i class="fa fa-circle-o"></i> Retorno de Vendas</a>
+          </li>
+          <!-- <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Retorno de Pagamentos</a></li>
+            <li><a href="pages/UI/sliders.html"><i class="fa fa-circle-o"></i> Retorno de Ajustes</a></li> -->
+        </ul>
+      </li>
+
+
+      <li class="treeview">
+        <a href="#">
+          <i class="ion ion-android-options"></i>
+          <span>Configurações</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li>
+            <a routerLink="editar/perfil">
+              <i class="fa fa-circle-o"></i> Perfil Usuário</a>
+          </li>
+        </ul>
+      </li>
+      <!-- <li class="treeview">
+          <a href="#">
+            <i class="ion ion-arrow-graph-up-right"></i> <span>Relatórios</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
+            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
+          </ul>
+        </li> -->
+
+
+    </ul>
+  </section>
+  <!-- /.sidebar -->
+</aside>
