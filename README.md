@@ -1,2 +1,2 @@
-# horacerta
+# HRCERTA
 Gerenciador de horas trabalhadas
