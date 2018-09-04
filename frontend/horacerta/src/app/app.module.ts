@@ -4,9 +4,9 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { MenuComponent } from './menu/menu.component';
-import { TopMenuComponent } from './top-menu/top-menu.component';
-import { CorpoComponent } from './corpo/corpo.component';
+import { MenuComponent } from './layout-admin-lte/menu/menu.component';
+import { TopMenuComponent } from './layout-admin-lte/top-menu/top-menu.component';
+import { CorpoComponent } from './layout-admin-lte/corpo/corpo.component';
 import { routing } from './app.router';
 import { DashboardComponent } from './paginas/dashboard/dashboard.component';
 
