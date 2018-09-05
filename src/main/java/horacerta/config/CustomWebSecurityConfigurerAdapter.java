@@ -21,17 +21,25 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//	auth.inMemoryAuthentication().withUser("teste").password(passwordEncoder().encode("user1Pass"))
-//				.authorities("ROLE_USER");
 		auth.jdbcAuthentication().dataSource(dataSource)
-				.usersByUsernameQuery("select username, password, enabled from users where username=?")
-				.authoritiesByUsernameQuery("select username, authority from authorities where username=?")
 				.passwordEncoder(new BCryptPasswordEncoder());
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/**").hasAnyRole("ADMIN", "USER").and().formLogin();
+		 http
+         .authorizeRequests()
+             .antMatchers("/resources/**").permitAll() 
+             .anyRequest().authenticated()
+             .and()
+         .formLogin()
+             .loginPage("/login/autenticar")
+             .permitAll()
+         .and()
+         	.logout()                                    
+         	.permitAll()
+         .and()
+         	.csrf().disable();
 	}
 
 	@Bean

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>Tela de login customizada</h2>
+	<form name="f" action="/login/processar" method="post">
+		<div id="error" style="display: none;">Usuário ou senha
+			incorretos.</div>
+		<div id="logout" style="display: none;">Você deslogou</div>
+		<label for="username">Username</label> <input type="text"
+			id="username" name="username" /> <label for="password">Password</label>
+		<input type="password" id="password" name="password" />
+		<button type="submit">Log in</button>
+	</form>
+	<script>
+		function getParameterByName(name, url) {
+			if (!url)
+				url = window.location.href;
+			name = name.replace(/[\[\]]/g, '\\$&');
+			var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'), results = regex
+					.exec(url);
+			if (!results)
+				return null;
+			if (!results[2])
+				return '';
+			return decodeURIComponent(results[2].replace(/\+/g, ' '));
+		}
+
+		function checkParametros(){
+			var error = getParameterByName('error');
+			console.log(error);
+			var logout = getParameterByName('logout');
+
+			if (error != null) {
+				document.getElementById('error').style.display = 'block';
+			}
+			if (logout != null) {
+				document.getElementById('logout').style.display = 'block';
+			}
+		}
+		checkParametros();
+	</script>
+</body>
+
+
+</html>
