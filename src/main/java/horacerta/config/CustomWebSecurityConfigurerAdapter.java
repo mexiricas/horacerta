@@ -35,6 +35,8 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
          .formLogin()
              .loginPage("/login/autenticar")
              .permitAll()
+             .loginProcessingUrl("/login/processar")
+             .successHandler(new CustomAuthenticationSucessHandler())
          .and()
          	.logout()                                    
          	.permitAll()
