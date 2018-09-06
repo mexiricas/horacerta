@@ -39,8 +39,9 @@ public class PontoDiario {
 	   @Temporal(TemporalType.DATE)
 	   private Date dataRegistro;
 	   
+	   //Saldo em mlisegundos
 	   @Transient
-	   private Integer saldo;
+	   private long saldo;
 	   
 	public long getId() {
 		return id;
@@ -80,8 +81,10 @@ public class PontoDiario {
 	}
 	
 	@PostConstruct
-	public Integer calculaSaldoDiario() {
-		//TODO calcular saldo e setar na variavel saldo
-		return null;
+	public void calculaSaldoDiario() {
+		long primeiroPeriodo = entrada.getTime() - pausaini.getTime();
+		long segundoPeriodo = pausafim.getTime() - saida.getTime();
+		long saldo = primeiroPeriodo + segundoPeriodo;
+		this.saldo = saldo;
 	}
 }
