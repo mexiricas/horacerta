@@ -9,6 +9,9 @@ import { TopMenuComponent } from './layout-admin-lte/top-menu/top-menu.component
 import { CorpoComponent } from './layout-admin-lte/corpo/corpo.component';
 import { routing } from './app.router';
 import { DashboardComponent } from './paginas/dashboard/dashboard.component';
+import { HistoricoComponent } from './paginas/historico/historico.component';
+import { PontoService } from './paginas/ponto.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -17,15 +20,16 @@ import { DashboardComponent } from './paginas/dashboard/dashboard.component';
     MenuComponent,
     TopMenuComponent,
     CorpoComponent,
-    DashboardComponent
+    DashboardComponent,
+    HistoricoComponent
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     routing
   ],
-  providers: [],
+  providers: [PontoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

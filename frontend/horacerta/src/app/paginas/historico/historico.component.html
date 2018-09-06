@@ -1,0 +1,52 @@
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>
+      HoraCerta
+      <small>Histórico de Registros</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li>
+        <a href="#">
+          <i class="fa fa-dashboard"></i> Home</a>
+      </li>
+      <li class="active">HoraCerta</li>
+    </ol>
+  </section>
+  <section class="content">
+    <div class="table-responsive">
+
+      <table id="tabela" class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th class="text-center">Entrada</th>
+            <th class="text-center">Saída Intervalo</th>
+            <th class="text-center">Volta Intervalo</th>
+            <th class="text-center">Saída</th>
+            <th class="text-center">Saldo</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let h of registros">
+            <td class="text-center">{{h.entrada}}</td>
+            <td class="text-center">{{h.pausaini}}</td>
+            <td class="text-center">{{h.pausafim | date:'dd/MM/yyyy'}}</td>
+            <td class="text-center">{{h.saida}}</td>
+            <td class="text-center">{{h.saldo}}</td>
+          </tr>
+          <tr class="odd" *ngIf="totalRegistro < 1">
+            <td valign="top" colspan="24" class="dataTables_empty" style="text-align: center">Nenhum registro correspondente encontrado
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+<!--     <e-paginar [qtdPorPagina]="qtdPorPagina" [totalRegistros]="totalRegistro" [qtdAdjacentes]="3" (onPaginate)="paginar($event)"
+      *ngIf="totalRegistro">
+
+    </e-paginar> -->
+
+  </section>
+</div>
