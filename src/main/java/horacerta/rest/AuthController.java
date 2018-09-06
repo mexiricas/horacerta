@@ -13,4 +13,8 @@ public class AuthController {
 		return "/login.html";
 	}
 
+	@RequestMapping(value = "/registrar", method = RequestMethod.GET)
+	public void registrar() {
+		//TODO Cadastro de usuários
+	}
 }

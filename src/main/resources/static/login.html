@@ -1,49 +1,192 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR">
+
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	 crossorigin="anonymous">
+	<style>
+		html, body, .container {
+			 height: 100%;
+		 }
+
+		 body {
+			background-image: url("../horacerta.jpg");
+			background-repeat: no-repeat;
+			background-size:100%; height: 100%; 
+		}
+
+		.card {
+			padding-right: 0px;
+			padding-left: 0px;
+		}
+
+		.card {
+			background: rgba(255, 255, 255, 0.6);
+		}
+
+		.card-img-top {
+			opacity: 0.5;
+		}
+
+		.input, .input:focus {
+			background-color: rgba(255, 255, 255, 0.6)
+		}
+
+		.btn {
+			background-color: rgba(119, 86, 31, 0.6);
+			border-color: rgba(119, 86, 31, 0.6);
+		}
+
+		.btn:hover {
+			background-color: rgba(119, 87, 31, 0.8);
+			border-color: rgba(119, 86, 31, 0.6);
+		}
+
+		.font-login {
+			font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			color: rgba(119, 86, 31, 0.8);
+			font-style: normal;
+			font-weight: bold;
+		}
+		
+		.form-control::-webkit-input-placeholder { font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			color: rgba(119, 86, 31, 0.8);
+			font-style: normal;  }  /* WebKit, Blink, Edge */
+		.form-control:-moz-placeholder { font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			color: rgba(119, 86, 31, 0.8);
+			font-style: normal; }  /* Mozilla Firefox 4 to 18 */
+		.form-control::-moz-placeholder { font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			color: rgba(119, 86, 31, 0.8);
+			font-style: normal; }  /* Mozilla Firefox 19+ */
+		.form-control:-ms-input-placeholder { font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			color: rgba(119, 86, 31, 0.8);
+			font-style: normal; }  /* Internet Explorer 10-11 */
+		.form-control::-ms-input-placeholder { font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			color: rgba(119, 86, 31, 0.8);
+			font-style: normal; }  /* Microsoft Edge */
+		.erro-login {
+			color: rgba(250, 10, 1, 0.6);
+			font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			text-align: center;
+			font-weight: bold;
+		}
+		
+		.registrarLinkContainer {
+			text-align: center;
+		}
+		
+		.registrarLink {
+			font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			color: rgba(119, 86, 31, 0.8);
+		}
+		
+		.registrarLink:hover {
+			color: rgba(150, 105, 29, 0.8);
+		}
+		
+	 </style>
 </head>
+
 <body>
-	<h2>Tela de login customizada</h2>
-	<form name="f" action="/login/autenticar" method="post">
-		<div id="error" style="display: none;">Usuário ou senha
-			incorretos.</div>
-		<div id="logout" style="display: none;">Você deslogou</div>
-		<label for="username">Username</label> <input type="text"
-			id="username" name="username" /> <label for="password">Password</label>
-		<input type="password" id="password" name="password" />
-		<button type="submit">Log in</button>
-	</form>
-	<script>
-		function getParameterByName(name, url) {
-			if (!url)
-				url = window.location.href;
-			name = name.replace(/[\[\]]/g, '\\$&');
-			var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'), results = regex
-					.exec(url);
-			if (!results)
-				return null;
-			if (!results[2])
-				return '';
-			return decodeURIComponent(results[2].replace(/\+/g, ' '));
-		}
 
-		function checkParametros(){
-			var error = getParameterByName('error');
-			console.log(error);
-			var logout = getParameterByName('logout');
+	<div class="container">
+		<div class="row justify-content-start align-items-center h-100">
+			<div class="card col-md-4">
+				<img class="card-img-top" src="../horacerta-1.png" style="opacity: 0.4">
+				<div class="erro-login" style="display: none" id="erroLogin">UsuÃ¡rio ou senha incorretos!</div>
+				<div class="card-body">
+					<form action="/login/autenticar" method="post" id="formLogin">
+						<div class="form-group">
+							<input type="text" class="form-control input" id="username" name="username" placeholder="Email" />
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control input" id="password" name="password" placeholder="Senha" />
+						</div>
+						<div class="form-group">
+							<input type="checkbox" name="remember-me" id="remember-me" />
+							<label for="remember-me" class="font-login">Continuar conectado</label>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary form-control">Entrar</button>
+						</div>
+						<div class= "registrarLinkContainer">
+							<a href="javascript:renderizarFormRegistro();" class="registrarLink">NÃ£o possuo uma conta</a>
+						</div>
+					</form>
+					<form style="display: none;" id="formRegistro" action="/login/registrar">
+						<div class="form-group">
+							<input type="text" class="form-control input" id="cadUsername" name="cadUsername" placeholder="Email" />
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control input" id="cadNome" name="cadNome" placeholder="Nome" />
+						</div>
+						
+						<div class="form-group">
+							<input type="password" class="form-control input" id="cadPassword" name="cadPassword" placeholder="Senha" />
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control input" id="confirmarPassword" name="confimarPassword" placeholder="Confirmar Senha" />
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary form-control">Cadastrar</button>
+						</div>
+						<div class= "registrarLinkContainer">
+							<a href="javascript:renderizarFormLogin();" class="registrarLink" >JÃ¡ possuo uma conta</a>
+						</div>
+					</form>	
+				</div>
+			</div>
+		</div>
+	</div>
 
-			if (error != null) {
-				document.getElementById('error').style.display = 'block';
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	 crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	 crossorigin="anonymous"></script>
+	 <script>
+			function getParameterByName(name, url) {
+				if (!url)
+					url = window.location.href;
+				name = name.replace(/[\[\]]/g, '\\$&');
+				var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'), results = regex
+						.exec(url);
+				if (!results)
+					return null;
+				if (!results[2])
+					return '';
+				return decodeURIComponent(results[2].replace(/\+/g, ' '));
 			}
-			if (logout != null) {
-				document.getElementById('logout').style.display = 'block';
+	
+			function checkParametros(){
+				var error = getParameterByName('error');
+
+				var logout = getParameterByName('logout');
+	
+				if (error != null) {
+					document.getElementById('erroLogin').style.display = 'block';
+				}
+				// if (logout != null) {
+				// 	document.getElementById('logout').style.display = 'block';
+				// }
 			}
-		}
-		checkParametros();
-	</script>
+			
+			function renderizarFormRegistro() {
+				document.getElementById('formLogin').style.display = 'none';
+				document.getElementById('formRegistro').style.display = 'block';	
+			}
+			
+			function renderizarFormLogin() {
+				document.getElementById('formRegistro').style.display = 'none';
+				document.getElementById('formLogin').style.display = 'block';
+				
+			}
+			
+			checkParametros();
+		</script>
 </body>
-
 
 </html>
