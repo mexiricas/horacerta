@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.core.Ordered;
@@ -31,11 +32,25 @@ public class UserDetailFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 		
-		if(!currentPrincipalName.equals("anonymousUser")) {
+		Cookie[] cookies = httpRequest.getCookies();
+		
+		String username = null;
+		
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("username")) {
+					username = cookie.getValue();
+				}
+			}
+		}
+		
+		
+		if(!currentPrincipalName.equals("anonymousUser") && username == null) {
 			Cookie usernameCookie = new Cookie("username", currentPrincipalName);	
 			httpResponse.addCookie(usernameCookie);
 		}

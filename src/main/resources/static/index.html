@@ -7,6 +7,9 @@
 <body>
 	<h2>Teste de aplicação protegida por autenticação do spring</h2>
 	<h3>Você está logado como: <div id="username"></div></h3>
+	<form action="/logout">
+		<button type="submit">Deslogar</button>
+	</form>
 	<script>
 	function getCookie(name) {
 		var cookie = document.cookie.split("=");
