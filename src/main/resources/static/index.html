@@ -6,5 +6,22 @@
 </head>
 <body>
 	<h2>Teste de aplicação protegida por autenticação do spring</h2>
+	<h3>Você está logado como: <div id="username"></div></h3>
+	<script>
+	function getCookie(name) {
+		var cookie = document.cookie.split("=");
+		for(var i = 0; i < cookie.length; i ++){
+			if(cookie[i] == name){
+				return cookie[i + 1].split(";")[0];
+			}
+		}
+		return null;
+	}
+	function getUsernameCookie(){
+		document.getElementById('username').innerHTML = getCookie('username') || 'Usuário não encontrado';
+	}
+	
+	getUsernameCookie();
+	</script>
 </body>
 </html>

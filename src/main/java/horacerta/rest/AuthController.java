@@ -12,9 +12,5 @@ public class AuthController {
 	public String autenticar() {
 		return "/login.html";
 	}
-	
-	@RequestMapping(value = "/processar", method = RequestMethod.POST)
-	public String processar() {
-		return "/index.html";
-	}
+
 }
