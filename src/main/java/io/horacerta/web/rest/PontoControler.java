@@ -1,6 +1,7 @@
 package io.horacerta.web.rest;
 
 import io.horacerta.model.PontoDiario;
+import io.horacerta.repository.PontoDao;
 import io.horacerta.service.PontoService;
 import io.horacerta.util.Utils;
 
@@ -20,6 +21,9 @@ public class PontoControler {
 	
 	@Autowired
 	private PontoService pontoService;
+	
+	@Autowired
+   private PontoDao pontoDao;
 	
 	@RequestMapping(value="/ponto/listagem", method = RequestMethod.POST)
 	public List<PontoDiario> listar(@RequestBody Map<String, String> parametros){
@@ -42,6 +46,16 @@ public class PontoControler {
 		pontoService.inserir(ponto);
 		
 	}
+	
+	@RequestMapping(value="/consultar/ponto", method = RequestMethod.POST)
+   public PontoDiario consultarPonto(@RequestBody Map<String, Object> parametros) throws ParseException {
+	   
+	   Date dataRegistro;
+	   dataRegistro = Utils.stringToDate((String) parametros.get("dataRegistro"));
+
+	   return pontoDao.findByDataRegistro(dataRegistro);
+      
+   }
 	
 	
 
