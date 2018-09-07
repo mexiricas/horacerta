@@ -35,45 +35,40 @@
             <div class="row">
               <div class="col-sm-3">
                 <div style="text-align: center">
-                  <h1>08:00</h1>
+                  <h1>{{ parametros.entrada ? parametros.entrada : '--:--' }}</h1>
                   <p>Entrada</p>
                 </div>
               </div>
 
               <div class="col-sm-3">
                 <div style="text-align: center">
-                  <h1>--:--</h1>
+                  <h1>{{ parametros.pausa ? parametros.pausa : '--:--' }}</h1>
                   <p>Pausa</p>
                 </div>
               </div>
 
               <div class="col-sm-3">
                 <div style="text-align: center">
-                  <h1>--:--</h1>
+                  <h1>{{ parametros.retorno ? parametros.retorno : '--:--' }}</h1>
                   <p>Retorno</p>
                 </div>
               </div>
 
               <div class="col-sm-3">
                 <div style="text-align: center">
-                  <h1>--:--</h1>
+                  <h1>{{ parametros.saida ? parametros.saida : '--:--' }}</h1>
                   <p>Saída</p>
                 </div>
               </div>
 
             </div>
             <br>
-            <div class="col-sm-4 col-sm-offset-4">
-              <div style="text-align: center">
-                <h1>HfdR32o3Tn</h1>
-                <input type="text" placeholder="Digite o código">
-              </div>
+            <div>
               <br>
               <div style="text-align: center">
-                <button type="submit"  class="btn btn-primary">Gravar</button>
+                <button type="submit" [disabled]="parametros.saida" (click)="registrarPonto()" class="btn btn-flat btn-primary">REGISTRAR AGORA</button>
               </div>
             </div>
-
           </div>
         </div>
       </div>

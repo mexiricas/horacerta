@@ -19,10 +19,9 @@ export class HistoricoComponent implements OnInit {
     this.listar({ dataInicial: "2018-09-01", dataFinal: "2018-09-06" })
   }
 
-  listar(filters) {
-    this.pontoService.listar(filters).subscribe(dados => {
+  listar(parametros) {
+    this.pontoService.listar(parametros).subscribe(dados => {
       this.registros = dados;
-      console.log(this.registros);
     });
 
 
