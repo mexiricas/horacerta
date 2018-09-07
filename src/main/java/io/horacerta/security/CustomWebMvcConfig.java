@@ -1,4 +1,4 @@
-package horacerta.config;
+package io.horacerta.security;
 
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

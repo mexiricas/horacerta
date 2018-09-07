@@ -1,12 +1,12 @@
-package horacerta.repository;
+package io.horacerta.repository;
+
+import io.horacerta.model.PontoDiario;
 
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import horacerta.model.PontoDiario;
 
 public interface PontoDaoCustom {
 	

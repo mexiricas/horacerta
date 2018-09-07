@@ -1,4 +1,4 @@
-package horacerta.misc;
+package io.horacerta.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

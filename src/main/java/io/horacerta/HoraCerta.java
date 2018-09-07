@@ -1,4 +1,4 @@
-package horacerta;
+package io.horacerta;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
