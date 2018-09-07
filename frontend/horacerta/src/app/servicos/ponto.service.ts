@@ -11,7 +11,11 @@ export class PontoService {
   constructor(private http: HttpClient) { }
 
   listar(parametros) {
-    return this.http.post(`${HR_API}/ponto/listagem`, parametros)
+    return this.http.post(`${HR_API}/ponto/listagem`, parametros);
+  }
+
+  consultarPonto(parametros){
+    return this.http.post(`${HR_API}/consultar/ponto`, parametros);
   }
 
 
