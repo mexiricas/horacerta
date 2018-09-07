@@ -19,6 +19,7 @@
       <table id="tabela" class="table table-bordered table-striped">
         <thead>
           <tr>
+            <th class="text-center">Data Referência</th>
             <th class="text-center">Entrada</th>
             <th class="text-center">Saída Intervalo</th>
             <th class="text-center">Volta Intervalo</th>
@@ -29,21 +30,23 @@
 
         <tbody>
           <tr *ngFor="let h of registros">
-            <td class="text-center">{{h.entrada}}</td>
-            <td class="text-center">{{h.pausaini}}</td>
-            <td class="text-center">{{h.pausafim | date:'dd/MM/yyyy'}}</td>
-            <td class="text-center">{{h.saida}}</td>
-            <td class="text-center">{{h.saldo}}</td>
+            <td class="text-center">{{ h.dataRegistro | date:'dd/MM/yyyy' }}</td>
+            <td class="text-center">{{ h.entrada | date:'HH:mm:ss' }}</td>
+            <td class="text-center">{{ h.pausaini | date:'HH:mm:ss'}}</td>
+            <td class="text-center">{{ h.pausafim | date:'HH:mm:ss' }}</td>
+            <td class="text-center">{{ h.saida | date:'HH:mm:ss' }}</td>
+            <td class="text-center">{{ h.saldo | date:'HH:mm:ss' }}</td>
           </tr>
-          <tr class="odd" *ngIf="totalRegistro < 1">
-            <td valign="top" colspan="24" class="dataTables_empty" style="text-align: center">Nenhum registro correspondente encontrado
+          <tr class="odd" *ngIf="registros < 1">
+            <td valign="top" colspan="24" class="dataTables_empty" style="text-align: center">Nenhum registro
+              correspondente encontrado
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-<!--     <e-paginar [qtdPorPagina]="qtdPorPagina" [totalRegistros]="totalRegistro" [qtdAdjacentes]="3" (onPaginate)="paginar($event)"
+    <!--     <e-paginar [qtdPorPagina]="qtdPorPagina" [totalRegistros]="totalRegistro" [qtdAdjacentes]="3" (onPaginate)="paginar($event)"
       *ngIf="totalRegistro">
 
     </e-paginar> -->

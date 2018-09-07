@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PontoService } from '../ponto.service';
+
+import { PontoService } from '../../servicos/ponto.service';
+
 
 @Component({
   selector: 'hr-historico',
@@ -8,17 +10,22 @@ import { PontoService } from '../ponto.service';
 })
 export class HistoricoComponent implements OnInit {
 
-  registros : any = []
+  registros: any = []
   totalRegistro = 0
 
   constructor(private pontoService: PontoService) { }
 
   ngOnInit() {
-    this.listar({dataInicial:"2018-09-01",dataFinal:"2018-09-06"})
+    this.listar({ dataInicial: "2018-09-01", dataFinal: "2018-09-06" })
   }
 
   listar(filters) {
-    this.pontoService.listar(filters).subscribe(dados => this.registros = dados);
+    this.pontoService.listar(filters).subscribe(dados => {
+      this.registros = dados;
+      console.log(this.registros);
+    });
+
+
   }
 
 

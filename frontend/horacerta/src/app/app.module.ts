@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -10,8 +10,7 @@ import { CorpoComponent } from './layout-admin-lte/corpo/corpo.component';
 import { routing } from './app.router';
 import { DashboardComponent } from './paginas/dashboard/dashboard.component';
 import { HistoricoComponent } from './paginas/historico/historico.component';
-import { PontoService } from './paginas/ponto.service';
-import { HttpClientModule } from '@angular/common/http';
+import { PontoService } from './servicos/ponto.service';
 
 
 @NgModule({
