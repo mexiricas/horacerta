@@ -3,6 +3,7 @@ package io.horacerta.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +28,8 @@ public class Pessoa {
    @Temporal(TemporalType.DATE)
    private Date dataRegistro = new Date();
 
+   private String username;
+
    public Long getId() {
       return id;
    }
@@ -50,5 +53,13 @@ public class Pessoa {
    public void setCargo(String cargo) {
       this.cargo = cargo;
    }
+
+public String getUsername() {
+	return username;
+}
+
+public void setUsername(String username) {
+	this.username = username;
+}
 
 }

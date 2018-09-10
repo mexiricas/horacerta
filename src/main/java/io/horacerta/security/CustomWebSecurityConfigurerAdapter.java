@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 
 @Configuration
@@ -27,8 +28,14 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource)
-				.passwordEncoder(new BCryptPasswordEncoder());
+		
+		auth
+			.userDetailsService(getJdbcUserDetailsManager())
+			.passwordEncoder(new BCryptPasswordEncoder())
+		.and()
+			.jdbcAuthentication()
+			.dataSource(dataSource)
+			.passwordEncoder(new BCryptPasswordEncoder());
 	}
 
 	@Override
@@ -37,13 +44,15 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 			http
 				.authorizeRequests()
 				.antMatchers("/**")
-				.permitAll();
+				.permitAll()
+			.and()
+				.csrf().disable();
 		}
 		else {
 
 			 http
 	         .authorizeRequests()
-	             .antMatchers("/*.jpg", "/*.png").permitAll()
+	             .antMatchers("/*.jpg", "/*.png", "/login/**").permitAll()
 	             .anyRequest().authenticated()
 	             .and()
 	         .formLogin()
@@ -69,6 +78,13 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public JdbcUserDetailsManager getJdbcUserDetailsManager() {
+		JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
+		userDetailsService.setDataSource(dataSource);
+		return userDetailsService;
 	}
 
 }
