@@ -18,6 +18,9 @@ public class PontoService {
 	
 	
 	public List<PontoDiario> listar(Date dataInicial, Date dataFinal){
+		if (dataInicial == null || dataFinal == null) {
+			return (List<PontoDiario>) pontoDao.findAll();
+		}
 		return pontoDao.listar(dataInicial, dataFinal);
 		
 	}
