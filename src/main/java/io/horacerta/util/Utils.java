@@ -11,10 +11,4 @@ public class Utils {
 		return new SimpleDateFormat("yyyy-MM-dd").parse(date); 
 
 	}
-
-
-
-
-
-
 }

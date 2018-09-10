@@ -6,12 +6,17 @@ import org.springframework.context.annotation.PropertySource;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @author Pedro Ribeiro
+ *
+ */
+
 @SpringBootApplication
 @EnableSwagger2
 @PropertySource(value = "classpath:/application.properties")
 public class HoraCerta {
 
-	public static void main(String[] args) { 
-		SpringApplication.run(HoraCerta.class, args);
-	}
+   public static void main(String[] args) {
+      SpringApplication.run(HoraCerta.class, args);
+   }
 }
