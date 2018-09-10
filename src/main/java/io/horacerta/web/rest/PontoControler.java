@@ -20,58 +20,63 @@ import io.horacerta.util.Utils;
 @RestController
 public class PontoControler {
 
-   @Autowired
-   private PontoService pontoService;
+	@Autowired
+	private PontoService pontoService;
 
-   @Autowired
-   private PontoDao pontoDao;
-   
-   @Autowired
-   private PessoaDao pessoaDao;
+	@Autowired
+	private PontoDao pontoDao;
 
-   @RequestMapping(value = "/ponto/listagem", method = RequestMethod.POST)
-   public List<PontoDiario> listar(@RequestBody Map<String, String> parametros) {
-	   
-	  //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	  //String currentPrincipalName = authentication.getName(); 
-	   
-      Date dataInicial;
-      Date dataFinal;
-      try {
-         dataFinal = Utils.stringToDate(parametros.get("dataFinal"));
-         dataInicial = Utils.stringToDate(parametros.get("dataInicial"));
-      } catch (ParseException e) {
-         e.printStackTrace();
-         return pontoService.listar(null, null);
-      }
+	@Autowired
+	private PessoaDao pessoaDao;
 
-      return pontoService.listar(dataInicial, dataFinal);
+	@RequestMapping(value = "/ponto/listagem", method = RequestMethod.POST)
+	public List<PontoDiario> listar(@RequestBody Map<String, String> parametros) {
 
-   }
+		//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		//String currentPrincipalName = authentication.getName(); 
 
-   @RequestMapping(value = "/ponto", method = RequestMethod.POST)
-   public void inserir(@RequestBody PontoDiario ponto) throws ParseException {
-  
-      //ponto.setEntrada(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse((String) parametros.get("entrada")));
-      //ponto.setPessoa((Pessoa) parametros.get("pessoa"));
+		Date dataInicial;
+		Date dataFinal;
+		if (parametros.get("dataFinal") == null || parametros.get("dataInicial") == null) {
+			return pontoService.listar();
+		} else {
+			try {
+				dataFinal = Utils.stringToDate(parametros.get("dataFinal"));
+				dataInicial = Utils.stringToDate(parametros.get("dataInicial"));
+				return pontoService.listar(dataInicial, dataFinal);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return null;
+			}
 
-//      System.out.println(parametros);
-//      return null;
-    pontoDao.save(ponto);
+		}
 
-   }
 
-   @RequestMapping(value = "/consultar/ponto", method = RequestMethod.POST)
-   public PontoDiario consultarPonto(@RequestBody PontoDiario ponto) throws ParseException {
-	   
+	}
 
-      //Date dataRegistro = Utils.stringToDate(dataRegistroString);
-      //System.out.println(parametros.get("pessoa"));
-      //System.out.println(parametros.get("pessoa"));
+	@RequestMapping(value = "/ponto", method = RequestMethod.POST)
+	public void inserir(@RequestBody PontoDiario ponto) throws ParseException {
 
-//      return pontoDao.findByDataRegistroAndPessoa(dataRegistro, (Integer) parametros.get("idPessoa"));
-      return pontoDao.findByDataRegistro(ponto.getDataRegistro());
+		//ponto.setEntrada(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse((String) parametros.get("entrada")));
+		//ponto.setPessoa((Pessoa) parametros.get("pessoa"));
 
-   }
+		//      System.out.println(parametros);
+		//      return null;
+		pontoDao.save(ponto);
+
+	}
+
+	@RequestMapping(value = "/consultar/ponto", method = RequestMethod.POST)
+	public PontoDiario consultarPonto(@RequestBody PontoDiario ponto) throws ParseException {
+
+
+		//Date dataRegistro = Utils.stringToDate(dataRegistroString);
+		//System.out.println(parametros.get("pessoa"));
+		//System.out.println(parametros.get("pessoa"));
+
+		//      return pontoDao.findByDataRegistroAndPessoa(dataRegistro, (Integer) parametros.get("idPessoa"));
+		return pontoDao.findByDataRegistro(ponto.getDataRegistro());
+
+	}
 
 }

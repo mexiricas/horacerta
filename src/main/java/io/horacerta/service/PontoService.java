@@ -12,19 +12,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PontoService {
-	
+
 	@Autowired
 	private PontoDao pontoDao;
-	
-	
+
+
 	public List<PontoDiario> listar(Date dataInicial, Date dataFinal){
-		if (dataInicial == null || dataFinal == null) {
-			return (List<PontoDiario>) pontoDao.findAll();
-		}
-		return pontoDao.listar(dataInicial, dataFinal);
-		
+		return pontoDao.findByDataRegistroBetween(dataInicial, dataFinal);
 	}
-	
+
+	public List<PontoDiario> listar(){
+		return (List<PontoDiario>) pontoDao.findAll();
+	}
+
 	public void inserir(PontoDiario ponto) {
 		pontoDao.save(ponto);
 	}

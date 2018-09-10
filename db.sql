@@ -12,4 +12,5 @@ create table authorities (
 
 insert into users(username, password, enabled)values('admin','admin@123',true);
 insert into authorities(username,authority)values('admin','ROLE_ADMIN');
+insert into pessoa (id,cargo,data_registro,nome) values (1,'Testador',now(),'Testolino Testadorzao')
  
