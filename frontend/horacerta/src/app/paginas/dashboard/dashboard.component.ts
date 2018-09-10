@@ -14,7 +14,8 @@ export class DashboardComponent implements OnInit {
     pausa: null,
     retorno: null,
     saida: null,
-    dataRegistro: null
+    dataRegistro: null,
+    idPessoa: 1
   }
 
   horaAtual;
@@ -42,28 +43,34 @@ export class DashboardComponent implements OnInit {
     this.dataAtual = ('0' + (hoje.getDate())).substr(-2) + ' de ' + this.meses[this.mes] + ' de ' + hoje.getFullYear();
   }
 
+  salvarPonto() {
+    this.pontoService.salvarPonto(this.parametros).subscribe(() => { });
+  }
+
   registrarPonto() {
     const hoje = new Date();
-    this.parametros.dataRegistro = hoje.getFullYear() + '-' + ('0' + (hoje.getMonth())).substr(-2) + '-' + ('0' + (hoje.getDate())).substr(-2);;
+    this.parametros.dataRegistro = hoje.getFullYear() + '-' + ('0' + (hoje.getMonth())).substr(-2) + '-' + ('0' + (hoje.getDate())).substr(-2) + ' ' + this.horaAtual;
+
     this.pontoService.consultarPonto(this.parametros).subscribe(p => {
-
-
       switch (p || !p) {
         case !this.parametros.entrada:
-          console.log(this.horaAtual);
-          this.parametros.entrada = this.horaAtual;
+          this.parametros.entrada = this.parametros.dataRegistro;
           console.log(this.parametros);
+
+          //this.salvarPonto();
           break;
         case !this.parametros.pausa:
-          console.log(this.horaAtual);
+          console.log("entrou");
           this.parametros.pausa = this.horaAtual;
-          console.log(this.parametros);
+          //this.pontoService.salvarPonto(this.parametros);
           break;
         case !this.parametros.retorno:
           this.parametros.retorno = this.horaAtual;
+          //this.pontoService.salvarPonto(this.parametros);
           break;
         case !this.parametros.saida:
           this.parametros.saida = this.horaAtual;
+          //this.pontoService.salvarPonto(this.parametros);
           break;
         default:
           break;

@@ -14,8 +14,12 @@ export class PontoService {
     return this.http.post(`${HR_API}/ponto/listagem`, parametros);
   }
 
-  consultarPonto(parametros){
+  consultarPonto(parametros) {
     return this.http.post(`${HR_API}/consultar/ponto`, parametros);
+  }
+
+  salvarPonto(ponto) {
+    return this.http.post(`${HR_API}/ponto`, ponto);
   }
 
 

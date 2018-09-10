@@ -16,7 +16,7 @@ export class HistoricoComponent implements OnInit {
   constructor(private pontoService: PontoService) { }
 
   ngOnInit() {
-    this.listar({ dataInicial: "2018-09-01", dataFinal: "2018-09-06" })
+    this.listar({ dataInicial: "2018-09-01", dataFinal: "2018-09-30" })
   }
 
   listar(parametros) {
