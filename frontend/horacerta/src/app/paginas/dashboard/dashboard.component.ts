@@ -10,12 +10,12 @@ import { PontoService } from '../../servicos/ponto.service';
 export class DashboardComponent implements OnInit {
 
   parametros: any = {
+    id: null,
     entrada: null,
-    pausa: null,
-    retorno: null,
+    pausaini: null,
+    pausafim: null,
     saida: null,
     dataRegistro: null,
-    idPessoa: 1
   }
 
   horaAtual;
@@ -29,6 +29,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.horaCerta();
     this.dataCerta();
+    this.consultarPonto();
+    
   }
 
   horaCerta() {
@@ -44,40 +46,72 @@ export class DashboardComponent implements OnInit {
   }
 
   salvarPonto() {
-    this.pontoService.salvarPonto(this.parametros).subscribe(() => { });
+    this.pontoService.salvarPonto(this.parametros).subscribe(() => {
+      this.consultarPonto();
+     });
   }
 
   registrarPonto() {
+
+    this.consultarPonto();
+
+    switch (true) {
+      case !this.parametros.entrada:
+        this.parametros.entrada = new Date();
+        console.log(this.parametros);
+        this.salvarPonto();
+        break;
+      case !this.parametros.pausaini:
+        this.parametros.pausaini = new Date();
+        console.log(this.parametros);
+        this.salvarPonto();
+        break;
+      case !this.parametros.pausafim:
+        this.parametros.pausafim = new Date();
+        console.log(this.parametros);
+        this.salvarPonto();
+        break;
+      case !this.parametros.saida:
+        this.parametros.saida = new Date();
+        console.log(this.parametros);
+        this.salvarPonto();
+        break;
+      default:
+        break;
+    }
+  }
+
+
+
+
+  consultarPonto() {
     const hoje = new Date();
-    this.parametros.dataRegistro = hoje.getFullYear() + '-' + ('0' + (hoje.getMonth())).substr(-2) + '-' + ('0' + (hoje.getDate())).substr(-2) + ' ' + this.horaAtual;
-
+    this.parametros.dataRegistro = hoje.getFullYear() + '-' + ('0' + (hoje.getMonth()+1)).substr(-2) + '-' + ('0' + (hoje.getDate())).substr(-2);
     this.pontoService.consultarPonto(this.parametros).subscribe(p => {
-      switch (p || !p) {
-        case !this.parametros.entrada:
-          this.parametros.entrada = this.parametros.dataRegistro;
-          console.log(this.parametros);
-
-          //this.salvarPonto();
-          break;
-        case !this.parametros.pausa:
-          console.log("entrou");
-          this.parametros.pausa = this.horaAtual;
-          //this.pontoService.salvarPonto(this.parametros);
-          break;
-        case !this.parametros.retorno:
-          this.parametros.retorno = this.horaAtual;
-          //this.pontoService.salvarPonto(this.parametros);
-          break;
-        case !this.parametros.saida:
-          this.parametros.saida = this.horaAtual;
-          //this.pontoService.salvarPonto(this.parametros);
-          break;
-        default:
-          break;
+      if (!p) {
+      this.parametros = {
+        id: null,
+        entrada: null,
+        pausaini: null,
+        pausafim: null,
+        saida: null,
+        dataRegistro: null,
+        pessoa: {
+          id: 1,
+          nome: 'Testador',
+          cargo: 'Testolino Testadorzao',
+          dataRegistro: '2018-09-10'
+        }
       }
-    });
 
+      console.log(this.parametros.dataRegistro);
+      
+      }
+      else {
+        this.parametros = p;
+      }
 
+    })
 
   }
 }
