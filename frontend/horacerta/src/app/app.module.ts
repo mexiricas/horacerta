@@ -11,6 +11,7 @@ import { routing } from './app.router';
 import { DashboardComponent } from './paginas/dashboard/dashboard.component';
 import { HistoricoComponent } from './paginas/historico/historico.component';
 import { PontoService } from './servicos/ponto.service';
+import { CookieModule } from 'ngx-cookie';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { PontoService } from './servicos/ponto.service';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    routing
+    routing,
+    CookieModule.forRoot()
   ],
   providers: [PontoService],
   bootstrap: [AppComponent]

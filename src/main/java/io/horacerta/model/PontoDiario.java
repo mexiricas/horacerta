@@ -3,7 +3,6 @@ package io.horacerta.model;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

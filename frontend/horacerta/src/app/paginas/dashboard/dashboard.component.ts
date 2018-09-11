@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { PontoService } from '../../servicos/ponto.service';
+import { PessoaService } from '../../servicos/pessoa.service';
 
 @Component({
   selector: 'hr-dashboard',
@@ -16,6 +17,7 @@ export class DashboardComponent implements OnInit {
     pausafim: null,
     saida: null,
     dataRegistro: null,
+    pessoa: null
   }
 
   horaAtual;
@@ -23,14 +25,17 @@ export class DashboardComponent implements OnInit {
   meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   mes;
   constructor(
-    private pontoService: PontoService
+    private pontoService: PontoService,
+    private pessoaService: PessoaService
   ) { }
 
   ngOnInit() {
     this.horaCerta();
     this.dataCerta();
-    this.consultarPonto();
-    
+    this.pessoaService.consultarPessoa().subscribe(pessoa => {
+      this.parametros.pessoa = pessoa;
+      this.consultarPonto();
+    });
   }
 
   horaCerta() {
@@ -96,12 +101,7 @@ export class DashboardComponent implements OnInit {
         pausafim: null,
         saida: null,
         dataRegistro: null,
-        pessoa: {
-          id: 1,
-          nome: 'Testador',
-          cargo: 'Testolino Testadorzao',
-          dataRegistro: '2018-09-10'
-        }
+        pessoa: null;
       }
 
       console.log(this.parametros.dataRegistro);

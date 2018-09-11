@@ -13,7 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
+
+import io.horacerta.service.UserDetailService;
 
 
 @Configuration
@@ -27,10 +28,13 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 	private String profile;
 	
 	@Autowired
+	private UserDetailService userDetailsService;
+	
+	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		
 		auth
-			.userDetailsService(getJdbcUserDetailsManager())
+			.userDetailsService(userDetailsService)
 			.passwordEncoder(new BCryptPasswordEncoder())
 		.and()
 			.jdbcAuthentication()
@@ -78,13 +82,6 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-	public JdbcUserDetailsManager getJdbcUserDetailsManager() {
-		JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
-		userDetailsService.setDataSource(dataSource);
-		return userDetailsService;
 	}
 
 }

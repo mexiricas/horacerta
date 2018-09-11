@@ -3,7 +3,6 @@ package io.horacerta.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,49 +16,50 @@ import javax.persistence.TemporalType;
 @Entity
 public class Pessoa {
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long id;
-   
-   private String nome;
-   
-   private String cargo;
-   
-   @Temporal(TemporalType.DATE)
-   private Date dataRegistro = new Date();
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-   private String username;
+	private String nome;
 
-   public Long getId() {
-      return id;
-   }
+	private String cargo;
 
-   public void setId(Long id) {
-      this.id = id;
-   }
+	@Temporal(TemporalType.DATE)
+	private Date dataRegistro = new Date();
 
-   public String getNome() {
-      return nome;
-   }
+	private String username;
 
-   public void setNome(String nome) {
-      this.nome = nome;
-   }
+	public String getUsername() {
+		return username;
+	}
 
-   public String getCargo() {
-      return cargo;
-   }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-   public void setCargo(String cargo) {
-      this.cargo = cargo;
-   }
+	public Long getId() {
+		return id;
+	}
 
-public String getUsername() {
-	return username;
-}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-public void setUsername(String username) {
-	this.username = username;
-}
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
 
 }

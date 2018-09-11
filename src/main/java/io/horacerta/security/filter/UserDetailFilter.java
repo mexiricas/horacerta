@@ -19,6 +19,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.horacerta.model.CustomUserDetail;
+import io.horacerta.model.Pessoa;
 import io.horacerta.util.AuthCondition;
 
 @Component
@@ -55,7 +59,8 @@ public class UserDetailFilter implements Filter{
 		
 		
 		if(!currentPrincipalName.equals("anonymousUser") && username == null) {
-			Cookie usernameCookie = new Cookie("username", currentPrincipalName);	
+			Pessoa pessoaLogada = ((CustomUserDetail) authentication.getPrincipal()).getPessoa();
+			Cookie usernameCookie = new Cookie("idPessoa", pessoaLogada.getId().toString());	
 			httpResponse.addCookie(usernameCookie);
 		}
 		
