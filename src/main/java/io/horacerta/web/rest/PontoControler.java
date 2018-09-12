@@ -55,26 +55,13 @@ public class PontoControler {
 	}
 
 	@RequestMapping(value = "/ponto", method = RequestMethod.POST)
-	public void inserir(@RequestBody PontoDiario ponto) throws ParseException {
-
-		//ponto.setEntrada(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse((String) parametros.get("entrada")));
-		//ponto.setPessoa((Pessoa) parametros.get("pessoa"));
-
-		//      System.out.println(parametros);
-		//      return null;
-		pontoDao.save(ponto);
+	public PontoDiario inserir(@RequestBody PontoDiario ponto) throws ParseException {
+		return pontoDao.save(ponto);
 
 	}
 
 	@RequestMapping(value = "/consultar/ponto", method = RequestMethod.POST)
 	public PontoDiario consultarPonto(@RequestBody PontoDiario ponto) throws ParseException {
-
-
-		//Date dataRegistro = Utils.stringToDate(dataRegistroString);
-		//System.out.println(parametros.get("pessoa"));
-		//System.out.println(parametros.get("pessoa"));
-
-		//      return pontoDao.findByDataRegistroAndPessoa(dataRegistro, (Integer) parametros.get("idPessoa"));
 		return pontoDao.findByDataRegistro(ponto.getDataRegistro());
 
 	}
