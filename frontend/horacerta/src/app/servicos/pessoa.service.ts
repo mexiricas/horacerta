@@ -8,12 +8,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PessoaService {
   
-  idPessoa: any;
+  public idPessoa: any = 1;
 
   constructor(private cookieService: CookieService, private http: HttpClient) { }
 
   ngOnInit() {
-    this.idPessoa = this.cookieService.get('idPessoa');
+    // this.idPessoa = this.cookieService.get('idPessoa');
   }
 
   consultarPessoa() {

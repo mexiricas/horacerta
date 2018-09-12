@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
     pausafim: null,
     saida: null,
     dataRegistro: null,
-    pessoa: null
+    pessoa: {}
   }
 
   horaAtual;
@@ -34,8 +34,10 @@ export class DashboardComponent implements OnInit {
     this.dataCerta();
     this.pessoaService.consultarPessoa().subscribe(pessoa => {
       this.parametros.pessoa = pessoa;
-      this.consultarPonto();
+      this.parametros.pessoa.id = this.pessoaService.idPessoa;
+      this.existeRegistroDia();
     });
+
   }
 
   horaCerta() {
@@ -51,34 +53,42 @@ export class DashboardComponent implements OnInit {
   }
 
   salvarPonto() {
-    this.pontoService.salvarPonto(this.parametros).subscribe(() => {
-      this.consultarPonto();
-     });
+    this.pontoService.salvarPonto(this.parametros).subscribe(p => {
+      this.parametros = p;
+    });
+  }
+
+  existeRegistroDia() {
+    const hoje = new Date();
+    this.parametros.dataRegistro = hoje.getFullYear() + '-' + ('0' + (hoje.getMonth())).substr(-2) + '-' + ('0' + (hoje.getDate())).substr(-2);;
+
+    this.pontoService.consultarPonto(this.parametros).subscribe(p => {
+
+      if (p) {
+        this.parametros = p;
+      }
+    });
   }
 
   registrarPonto() {
 
-    this.consultarPonto();
+    this.existeRegistroDia();
 
     switch (true) {
       case !this.parametros.entrada:
         this.parametros.entrada = new Date();
-        console.log(this.parametros);
         this.salvarPonto();
         break;
       case !this.parametros.pausaini:
         this.parametros.pausaini = new Date();
-        console.log(this.parametros);
         this.salvarPonto();
         break;
       case !this.parametros.pausafim:
         this.parametros.pausafim = new Date();
-        console.log(this.parametros);
         this.salvarPonto();
         break;
       case !this.parametros.saida:
         this.parametros.saida = new Date();
-        console.log(this.parametros);
         this.salvarPonto();
         break;
       default:
@@ -86,32 +96,4 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-
-
-
-  consultarPonto() {
-    const hoje = new Date();
-    this.parametros.dataRegistro = hoje.getFullYear() + '-' + ('0' + (hoje.getMonth()+1)).substr(-2) + '-' + ('0' + (hoje.getDate())).substr(-2);
-    this.pontoService.consultarPonto(this.parametros).subscribe(p => {
-      if (!p) {
-      this.parametros = {
-        id: null,
-        entrada: null,
-        pausaini: null,
-        pausafim: null,
-        saida: null,
-        dataRegistro: null,
-        pessoa: null;
-      }
-
-      console.log(this.parametros.dataRegistro);
-      
-      }
-      else {
-        this.parametros = p;
-      }
-
-    })
-
-  }
 }
