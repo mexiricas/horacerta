@@ -98,13 +98,14 @@
 			<div class="card col-md-4">
 				<img class="card-img-top" src="../horacerta-1.png" style="opacity: 0.4">
 				<div class="erro-login" style="display: none" id="erroLogin">Usuário ou senha incorretos!</div>
+				<div class="erro-login" style="display:none" id="erroCad"></div>
 				<div class="card-body">
 					<form action="/login/autenticar" method="post" id="formLogin">
 						<div class="form-group">
-							<input type="text" class="form-control input" id="username" name="username" placeholder="Email" />
+							<input type="text" class="form-control input" id="username" name="username" placeholder="Email"/>
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control input" id="password" name="password" placeholder="Senha" />
+							<input type="password" class="form-control input" id="password" name="password" placeholder="Senha"/>
 						</div>
 						<div class="form-group">
 							<input type="checkbox" name="remember-me" id="remember-me" />
@@ -119,18 +120,18 @@
 					</form>
 					<form style="display: none;" id="formRegistro" action="/login/registrar" method="post">
 						<div class="form-group">
-							<input type="text" class="form-control input" id="cadUsername" name="cadUsername" placeholder="Email" />
+							<input type="text" class="form-control input" id="cadUsername" name="cadUsername" placeholder="Email" required/>
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control input" id="cadNome" name="cadNome" placeholder="Nome" />
-						</div>
-						
-						<div class="form-group">
-							<input type="text" class="form-control input" id="cadCargo" name="cadCargo" placeholder="Cargo" />
+							<input type="text" class="form-control input" id="cadNome" name="cadNome" placeholder="Nome" required/>
 						</div>
 						
 						<div class="form-group">
-							<input type="password" class="form-control input" id="cadPassword" name="cadPassword" placeholder="Senha" onkeyup="check()"/>
+							<input type="text" class="form-control input" id="cadCargo" name="cadCargo" placeholder="Cargo" required/>
+						</div>
+						
+						<div class="form-group">
+							<input type="password" class="form-control input" id="cadPassword" name="cadPassword" placeholder="Senha" onkeyup="check()" required/>
 						</div>
 						<div class="form-group">
 							<input type="password" class="form-control input" id="confirmarPassword" name="confimarPassword" placeholder="Confirmar Senha" onkeyup="check()"/>
@@ -170,11 +171,19 @@
 	
 			function checkParametros(){
 				var error = getParameterByName('error');
+				var erroCad = getParameterByName('errorCad')
 				var logout = getParameterByName('logout');
 	
 				if (error != null) {
 					document.getElementById('erroLogin').style.display = 'block';
 				}
+				
+				if(erroCad != null) {
+					document.getElementById('erroCad').innerHTML = 'Usuário ' + erroCad + ' já está em uso!';
+					document.getElementById('erroCad').style.display = 'block';
+					renderizarFormRegistro();
+				}
+				
 				// if (logout != null) {
 				// 	document.getElementById('logout').style.display = 'block';
 				// }

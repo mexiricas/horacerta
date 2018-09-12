@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,11 +56,13 @@ public class AuthController {
 		try {
 			userDetailService.createUser(usuario);
 			pessoaDao.save(pessoa);
-		} catch (Exception e) {
-			response.sendRedirect("/login.html?error");
+		} catch (DataIntegrityViolationException e) {
+			response.sendRedirect("/login/autenticar?errorCad=" + formParam.get("cadUsername"));
 		}
-
-		response.sendRedirect("/index.html");
+		
+		if(!response.isCommitted()) {
+			response.sendRedirect("/index.html");
+		}
 
 	}
 }
