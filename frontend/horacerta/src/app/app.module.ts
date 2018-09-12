@@ -12,6 +12,7 @@ import { DashboardComponent } from './paginas/dashboard/dashboard.component';
 import { HistoricoComponent } from './paginas/historico/historico.component';
 import { PontoService } from './servicos/ponto.service';
 import { CookieModule } from 'ngx-cookie';
+import { PaginarComponent } from './componentes/paginar/paginar.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CookieModule } from 'ngx-cookie';
     TopMenuComponent,
     CorpoComponent,
     DashboardComponent,
-    HistoricoComponent
+    HistoricoComponent,
+    PaginarComponent
   ],
   imports: [
     BrowserModule,

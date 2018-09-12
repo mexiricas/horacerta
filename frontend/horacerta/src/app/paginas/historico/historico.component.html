@@ -13,43 +13,130 @@
       <li class="active">HoraCerta</li>
     </ol>
   </section>
+
   <section class="content">
-    <div class="table-responsive">
+    <div class="box box-default collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Filtro de Horas</h3>
 
-      <table id="tabela" class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th class="text-center">Data Referência</th>
-            <th class="text-center">Entrada</th>
-            <th class="text-center">Saída Intervalo</th>
-            <th class="text-center">Volta Intervalo</th>
-            <th class="text-center">Saída</th>
-            <th class="text-center">Saldo</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr *ngFor="let h of registros">
-            <td class="text-center">{{ h.dataRegistro | date:'dd/MM/yyyy' }}</td>
-            <td class="text-center">{{ h.entrada | date:'HH:mm:ss' }}</td>
-            <td class="text-center">{{ h.pausaini | date:'HH:mm:ss'}}</td>
-            <td class="text-center">{{ h.pausafim | date:'HH:mm:ss' }}</td>
-            <td class="text-center">{{ h.saida | date:'HH:mm:ss' }}</td>
-            <td class="text-center">{{ h.saldo | date:'HH:mm:ss' }}</td>
-          </tr>
-          <tr class="odd" *ngIf="registros < 1">
-            <td valign="top" colspan="24" class="dataTables_empty" style="text-align: center">Nenhum registro
-              correspondente encontrado
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse">
+            <i class="fa fa-plus"></i>
+          </button>
+          <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button> -->
+        </div>
+      </div>
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="col-md-3 col-sm-6">
+                <label>Data inicial</label>
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="date" class="form-control pull-right">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-3 col-sm-6">
+                  <label>Data final</label>
+                  <div class="input-group date">
+                    <div class="input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="date" class="form-control pull-right">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box-footer">
+        <div style="float: right">
+          <button type="button" (click)="pesquisarVendas()" class="btn btn-primary" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Aguarde...">Consultar</button>
+        </div>
+        <div style="float: right">
+          <button type="button" *ngIf="habilitarBotao" (click)="reenviarVendas()" class="btn btn-primary"
+            data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Aguarde...">Reenviar</button>
+        </div>
+      </div>
     </div>
+    <div class="row" style="margin-bottom:  12%">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Resultado</h3>
+          </div>
 
-    <!--     <e-paginar [qtdPorPagina]="qtdPorPagina" [totalRegistros]="totalRegistro" [qtdAdjacentes]="3" (onPaginate)="paginar($event)"
-      *ngIf="totalRegistro">
+          <div class="box-body">
+            <div class="dataTables_wrapper form-inline dt-bootstrap">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="dataTables_length" id="example1_length">
+                    <label>
+                      <select name="example1_length" aria-controls="example1" class="form-control input-sm">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select> resultados por página</label>
+                  </div>
+                </div>
+                <div class="col-sm-6" style="text-align:right">
+                  <div id="example1_filter" class="dataTables_filter">
+                    <label>Pesquisar:
+                      <input type="text" class="form-control input-sm" placeholder="Autorização" aria-controls="example1">
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="table-responsive">
 
-    </e-paginar> -->
+                <table id="tabela" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Data Referência</th>
+                      <th class="text-center">Entrada</th>
+                      <th class="text-center">Saída Intervalo</th>
+                      <th class="text-center">Volta Intervalo</th>
+                      <th class="text-center">Saída</th>
+                      <th class="text-center">Saldo</th>
+                    </tr>
+                  </thead>
 
+                  <tbody>
+                    <tr *ngFor="let h of popularTabela(registros)">
+                      <td class="text-center">{{ h.dataRegistro | date:'dd/MM/yyyy' }}</td>
+                      <td class="text-center">{{ h.entrada | date:'HH:mm:ss' }}</td>
+                      <td class="text-center">{{ h.pausaini | date:'HH:mm:ss'}}</td>
+                      <td class="text-center">{{ h.pausafim | date:'HH:mm:ss' }}</td>
+                      <td class="text-center">{{ h.saida | date:'HH:mm:ss' }}</td>
+                      <td class="text-center">{{ h.saldo | date:'HH:mm:ss' }}</td>
+                    </tr>
+                    <tr class="odd" *ngIf="registros < 1">
+                      <td valign="top" colspan="24" class="dataTables_empty" style="text-align: center">Nenhum registro
+                        correspondente encontrado
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- PAGINAÇÃO -->
+              <hr-paginar [qtdPorPagina]="qtdPorPagina" 
+              [totalRegistros]="totalRegistro" 
+              [qtdAdjacentes]="3"
+              (onPaginate)="paginar($event)" 
+              *ngIf="totalRegistro">
+              </hr-paginar>
+              <!-- FIM PAGINAÇÃO -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </div>

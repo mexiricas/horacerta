@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-sm-5">
+    <div class="dataTables_info" role="status" aria-live="polite" *ngIf="totalRegistros">Mostrando de {{ ((pagina -1) *
+      qtdPorPagina) + 1 }} até {{ (qtdPorPagina * pagina) > totalRegistros ? totalRegistros
+      : (qtdPorPagina * pagina) }} de {{ totalRegistros }} registros</div>
+  </div>
+  <div class="col-sm-7">
+    <div class="dataTables_paginate paging_simple_numbers">
+      <ul class="pagination">
+
+        <li class="page-item" *ngIf="pagina!==1">
+          <a class="page-link" href="#" aria-label="Primeiro" (click)="paginar(1, $event)">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li *ngIf="pagina!==1" class="page-item">
+          <a class="page-link" href="#" aria-label="Anterior" (click)="paginar(pagina-1, $event)">
+            <span aria-hidden="true">&lsaquo;</span>
+          </a>
+        </li>
+        <li *ngFor="let i of paginas" [ngClass]="{'active': i===pagina}" class="page-item">
+          <a class="page-link" href="#" (click)="paginar(i, $event)">{{ i }}</a>
+        </li>
+        <li *ngIf="exibirProximo" class="page-item">
+          <a class="page-link" href="#" aria-label="Próximo" (click)="paginar(pagina+1, $event)">
+            <span aria-hidden="true">&rsaquo;</span>
+          </a>
+        </li>
+        <li *ngIf="exibirProximo" class="page-item">
+          <a class="page-link" href="#" aria-label="Último" (click)="paginar(qtdPaginas, $event)">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
