@@ -48,6 +48,11 @@
 			background-color: rgba(119, 87, 31, 0.8);
 			border-color: rgba(119, 86, 31, 0.6);
 		}
+		
+		.btn:disabled {
+			background-color: rgba(142, 115, 67, 0.9);
+			border-color: rgba(119, 86, 31, 0.8);
+		}
 
 		.font-login {
 			font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -91,6 +96,8 @@
 			color: rgba(150, 105, 29, 0.8);
 		}
 		
+		
+		
 	 </style>
 </head>
 
@@ -133,13 +140,13 @@
 						</div>
 						
 						<div class="form-group">
-							<input type="password" class="form-control input" id="cadPassword" name="cadPassword" placeholder="Senha" />
+							<input type="password" class="form-control input" id="cadPassword" name="cadPassword" placeholder="Senha" onkeyup="check()"/>
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control input" id="confirmarPassword" name="confimarPassword" placeholder="Confirmar Senha" />
+							<input type="password" class="form-control input" id="confirmarPassword" name="confimarPassword" placeholder="Confirmar Senha" onkeyup="check()"/>
 						</div>
 						<div class="form-group">
-							<button type="submit" class="btn btn-primary form-control">Cadastrar</button>
+							<button type="submit" class="btn btn-primary form-control" id="cadButton">Cadastrar</button>
 						</div>
 						<div class= "registrarLinkContainer">
 							<a href="javascript:renderizarFormLogin();" class="registrarLink" >Já possuo uma conta</a>
@@ -192,7 +199,20 @@
 			function renderizarFormLogin() {
 				document.getElementById('formRegistro').style.display = 'none';
 				document.getElementById('formLogin').style.display = 'block';
-				
+				s
+			}
+			
+			function check() {
+				if(document.getElementById("cadPassword").value != document.getElementById("confirmarPassword").value){
+					document.getElementById("cadPassword").style.border = "1px solid red";
+					document.getElementById("confirmarPassword").style.border = "1px solid red";
+					document.getElementById("cadButton").disabled = true;
+				}
+				else {
+					document.getElementById("cadPassword").style.border = "rgba(119, 86, 31, 0.6)";
+					document.getElementById("confirmarPassword").style.border = "rgba(119, 86, 31, 0.6)";
+					document.getElementById("cadButton").disabled = false;
+				}
 			}
 			
 			checkParametros();
