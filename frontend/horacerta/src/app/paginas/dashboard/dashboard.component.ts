@@ -101,7 +101,7 @@ export class DashboardComponent implements OnInit {
         pausafim: null,
         saida: null,
         dataRegistro: null,
-        pessoa: null;
+        pessoa: null
       }
 
       console.log(this.parametros.dataRegistro);

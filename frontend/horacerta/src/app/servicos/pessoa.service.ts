@@ -12,13 +12,8 @@ export class PessoaService {
 
   constructor(private cookieService: CookieService, private http: HttpClient) { }
 
-  ngOnInit() {
-    this.idPessoa = this.cookieService.get('idPessoa');
-  }
-
   consultarPessoa() {
+    this.idPessoa = this.cookieService.get('idPessoa');
     return this.http.get(`${HR_API}/pessoas/${this.idPessoa}`);
   }
-
-
 }

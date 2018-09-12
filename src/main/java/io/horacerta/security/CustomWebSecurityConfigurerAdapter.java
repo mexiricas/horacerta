@@ -64,7 +64,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 	             .permitAll()
 	             .defaultSuccessUrl("/")
 	         .and()
-	         	.logout().deleteCookies("username")              
+	         	.logout().deleteCookies("idPessoa")          
 	         	.permitAll()
 	         .and()
 	         	.csrf().disable();
