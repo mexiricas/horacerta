@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 
 import { PontoService } from '../../servicos/ponto.service';
+import { PessoaService } from '../../servicos/pessoa.service';
 
 
 @Component({
@@ -13,6 +14,16 @@ export class HistoricoComponent implements OnInit {
   registros: any = [];
   filtroHistorico: any = [];
 
+  parametros: any = {
+    id: null,
+    entrada: null,
+    pausaini: null,
+    pausafim: null,
+    saida: null,
+    dataRegistro: null,
+    pessoa: {}
+  }
+
   pagina: number = 0;
   qtdPorPagina: number = 10;
   qtdPaginas: number;
@@ -21,22 +32,29 @@ export class HistoricoComponent implements OnInit {
 
   static atualizacao = new EventEmitter<any>();
 
-  constructor(private pontoService: PontoService) { }
+  constructor(
+    private pontoService: PontoService,
+    private pessoaService: PessoaService) { }
 
   ngOnInit() {
-    this.listar({ dataInicial: null, dataFinal: null })
+    this.pessoaService.consultarPessoa().subscribe(pessoa => {
+      this.parametros.pessoa = pessoa;
+      this.parametros.pessoa.id = this.pessoaService.idPessoa;
+      this.anoAtual();
+      this.listar();
+    });
   }
 
-  listar(parametros) {
-    this.pontoService.listar(parametros).subscribe(dados => {
+  listar() {
+    this.pontoService.listar(this.parametros).subscribe(dados => {
       this.registros = dados;
     });
   }
 
   paginar($event: any) {
     this.pagina = $event - 1;
-    this.qtdPaginas = Math.ceil(this.registros.itens.length / this.qtdPorPagina);
-    this.popularTabela(this.registros.itens);
+    this.qtdPaginas = Math.ceil(this.registros.length / this.qtdPorPagina);
+    this.popularTabela(this.registros);
     HistoricoComponent.atualizacao.emit(this.qtdPaginas);
   }
 
@@ -54,7 +72,15 @@ export class HistoricoComponent implements OnInit {
     return this.filtroHistorico;
   }
 
-  pesquisarVendas() {}
+  
+  anoAtual(){
+    const date = new Date();
+    this.parametros.ano = date.getFullYear();
+    this.parametros.mes = (date.getMonth() + 1) % 13;
+    
+    this.parametros.dataInicial = `${this.parametros.ano}${('0' + (date.getMonth() + 1)).substr(-2)}01`;
+    this.parametros.dataFinal = `${this.parametros.ano}${('0' + ((date.getMonth() + 2) % 13)).substr(-2)}01`;
+  }
 
 
 }
