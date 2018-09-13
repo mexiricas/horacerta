@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
 
   existeRegistroDia() {
     const hoje = new Date();
-    this.parametros.dataRegistro = hoje.getFullYear() + '-' + ('0' + (hoje.getMonth())).substr(-2) + '-' + ('0' + (hoje.getDate())).substr(-2);;
+    this.parametros.dataRegistro = hoje.getFullYear() + '-' + ('0' + (hoje.getMonth() + 1)).substr(-2) + '-' + ('0' + (hoje.getDate())).substr(-2);;
 
     this.pontoService.consultarPonto(this.parametros).subscribe(p => {
 
