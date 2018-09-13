@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Authority {
+public class Authorities {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +22,9 @@ public class Authority {
 	@Column(nullable = false)
 	private String authority;
 
-	public Authority() {};
+	public Authorities() {};
 	
-	public Authority(Users user, String authority) {
+	public Authorities(Users user, String authority) {
 		this.setAuthority(authority);
 		this.setUser(user);
 	}

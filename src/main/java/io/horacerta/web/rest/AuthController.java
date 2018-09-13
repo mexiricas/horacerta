@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import io.horacerta.model.Authority;
+import io.horacerta.model.Authorities;
 import io.horacerta.model.Pessoa;
 import io.horacerta.model.Users;
 import io.horacerta.repository.PessoaDao;
@@ -44,8 +44,8 @@ public class AuthController {
 			throws IOException {
 		Users usuario = new Users(formParam.get("cadUsername"), passwordEncoder.encode(formParam.get("cadPassword")), true);
 
-		List<Authority> authorities = new ArrayList<Authority>();
-		authorities.add(new Authority(usuario ,"ROLE_USER"));
+		List<Authorities> authorities = new ArrayList<Authorities>();
+		authorities.add(new Authorities(usuario ,"ROLE_USER"));
 		usuario.setAuthorities(authorities);
 
 		Pessoa pessoa = new Pessoa();

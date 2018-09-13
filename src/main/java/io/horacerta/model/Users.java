@@ -33,8 +33,8 @@ public class Users {
 		this.enabled = enabled;
 	}
 
-	@OneToMany(targetEntity = Authority.class, cascade= CascadeType.ALL, fetch= FetchType.EAGER)
-	private List<Authority> authorities;
+	@OneToMany(targetEntity = Authorities.class, cascade= CascadeType.ALL, fetch= FetchType.EAGER)
+	private List<Authorities> authorities;
 
 	public Users() {
 	}
@@ -61,11 +61,11 @@ public class Users {
 		this.password = password;
 	}
 
-	public List<Authority> getAuthorities() {
+	public List<Authorities> getAuthorities() {
 		return authorities;
 	}
 
-	public void setAuthorities(List<Authority> authorities) {
+	public void setAuthorities(List<Authorities> authorities) {
 		this.authorities = authorities;
 	}
 
