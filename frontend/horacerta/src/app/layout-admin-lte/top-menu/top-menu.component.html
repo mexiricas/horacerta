@@ -23,14 +23,14 @@
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img src="../../assets/imagens/userAvatar.png" class="user-image" alt="User Image">
-            <span class="hidden-xs">{{pessoa?.nome}}</span>
+            <span class="hidden-xs">{{pessoa?.nome | nomeUsuario}}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
               <img src="../../assets/imagens/userAvatar.png" class="img-circle" alt="User Image">
               <p>
-                {{pessoa?.nome}}
+                {{pessoa?.nome | nomeUsuario}}
                 <small>{{pessoa?.cargo}}</small>
               </p>
             </li>

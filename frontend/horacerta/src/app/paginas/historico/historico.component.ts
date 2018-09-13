@@ -17,6 +17,7 @@ export class HistoricoComponent implements OnInit {
   qtdPorPagina: number = 10;
   qtdPaginas: number;
   totalRegistro;
+  habilitarBotao = false;
 
   static atualizacao = new EventEmitter<any>();
 
@@ -52,6 +53,8 @@ export class HistoricoComponent implements OnInit {
     HistoricoComponent.atualizacao.emit(this.qtdPaginas);
     return this.filtroHistorico;
   }
+
+  pesquisarVendas() {}
 
 
 }

@@ -13,6 +13,7 @@ import { HistoricoComponent } from './paginas/historico/historico.component';
 import { PontoService } from './servicos/ponto.service';
 import { CookieModule } from 'ngx-cookie';
 import { PaginarComponent } from './componentes/paginar/paginar.component';
+import { NomeUsuarioPipe } from './pipes/nome-usuario.pipe';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { PaginarComponent } from './componentes/paginar/paginar.component';
     CorpoComponent,
     DashboardComponent,
     HistoricoComponent,
-    PaginarComponent
+    PaginarComponent,
+    NomeUsuarioPipe
   ],
   imports: [
     BrowserModule,
