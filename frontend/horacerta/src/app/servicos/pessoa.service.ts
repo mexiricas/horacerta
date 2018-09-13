@@ -23,7 +23,7 @@ export class PessoaService {
       this.idPessoa = this.cookieService.get('idPessoa');
     }
     else {
-      this.idPessoa = 6;
+      this.idPessoa = 1;
     }
     return this.http.get(`${HR_API}/pessoas/${this.idPessoa}`);
   }
