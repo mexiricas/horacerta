@@ -64,6 +64,8 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 	             .permitAll()
 	             .defaultSuccessUrl("/")
 	         .and()
+	         	.rememberMe()
+	         .and()
 	         	.logout().deleteCookies("idPessoa")          
 	         	.permitAll()
 	         .and()

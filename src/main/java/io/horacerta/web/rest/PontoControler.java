@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.horacerta.model.Pessoa;
 import io.horacerta.model.PontoDiario;
-import io.horacerta.repository.PessoaDao;
 import io.horacerta.repository.PontoDao;
 import io.horacerta.service.PontoService;
 import io.horacerta.util.Utils;
@@ -26,9 +24,6 @@ public class PontoControler {
 
 	@Autowired
 	private PontoDao pontoDao;
-
-	@Autowired
-	private PessoaDao pessoaDao;
 
 	@RequestMapping(value = "/ponto/listagem", method = RequestMethod.POST)
 	public List<PontoDiario> listar(@RequestBody Map<String, String> parametros) {
