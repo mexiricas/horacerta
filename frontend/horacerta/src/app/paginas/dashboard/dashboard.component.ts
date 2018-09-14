@@ -4,6 +4,7 @@ import { PontoService } from '../../servicos/ponto.service';
 import { PessoaService } from '../../servicos/pessoa.service';
 import { LIMITE_MINIMO_TAMANHO_HORA } from './../../app.api';
 import { DatePipe } from '@angular/common';
+import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'hr-dashboard',
@@ -23,6 +24,7 @@ export class DashboardComponent implements OnInit {
   }
 
   tamMinimo = LIMITE_MINIMO_TAMANHO_HORA;
+  disablePontoButton = false;
 
   customPatterns = {
     '0': { pattern: new RegExp('[0-9-]+') }
@@ -31,6 +33,7 @@ export class DashboardComponent implements OnInit {
   horaAtual;
   dataAtual;
   meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+  atributosPonto = ['entrada', 'pausaini', 'pausafim', 'saida'];
   mes;
   constructor(
     private pontoService: PontoService,
@@ -65,15 +68,27 @@ export class DashboardComponent implements OnInit {
           target.selectionEnd = position - 1;
         }
 
-        else if(position == 5 && target.value.charAt(position-1).match(/^[0-9]+$/) == null) {
+        else if (position == 5 && target.value.charAt(position - 1).match(/^[0-9]+$/) == null) {
           target.selectionEnd = 0;
         }
-        else if(position == 5 && target.value.charAt(position-1).match(/^[0-9]+$/) != null) {
+        else if (position == 5 && target.value.charAt(position - 1).match(/^[0-9]+$/) != null) {
           target.selectionEnd = 5;
         }
         else {
           target.selectionEnd = position;
         }
+
+        if (!this.newDateFromHoraMin(target.value, (target.value.indexOf(':') > -1 ? ':' : ''))) {
+          target.classList.add("horaInvalida");
+          this.disablePontoButton = true;
+        }
+        else {
+          target.classList.remove("horaInvalida");
+          if (document.getElementsByClassName("horaInvalida").length <= 0) {
+            this.disablePontoButton = false;
+          }
+        }
+
       })
     }
 
@@ -91,86 +106,71 @@ export class DashboardComponent implements OnInit {
     this.dataAtual = ('0' + (hoje.getDate())).substr(-2) + ' de ' + this.meses[this.mes] + ' de ' + hoje.getFullYear();
   }
 
-  salvarPonto() {
-    this.pontoService.salvarPonto(this.parametros).subscribe(p => {
-      this.parametros = p;
+  salvarPonto(ponto: any) {
+    this.pontoService.salvarPonto(ponto).subscribe(() => {
+      this.criarAlert('sucessoRegistroPonto');
+      this.existeRegistroDia();
     });
   }
 
   existeRegistroDia() {
     const hoje = new Date();
     this.parametros.dataRegistro = hoje.getFullYear() + '-' + ('0' + (hoje.getMonth())).substr(-2) + '-' + ('0' + (hoje.getDate())).substr(-2);;
-
     this.pontoService.consultarPonto(this.parametros).subscribe((p: any) => {
 
       if (p) {
         console.log(p);
         var datePipe = new DatePipe('pt-BR');
-        p.entrada = datePipe.transform(p.entrada, 'HH:mm');
-        p.pausaini = datePipe.transform(p.pausaini, 'HH:mm');
-        p.pausafim = datePipe.transform(p.pausafim, 'HH:mm');
-        p.saida = datePipe.transform(p.saida, 'HH:mm');
-        this.parametros = p;
+
+        if (p.entrada) p.entrada = datePipe.transform(p.entrada, 'HH:mm');
+        if (p.pausaini) p.pausaini = datePipe.transform(p.pausaini, 'HH:mm');
+        if (p.pausafim) p.pausafim = datePipe.transform(p.pausafim, 'HH:mm');
+        if (p.saida) p.saida = datePipe.transform(p.saida, 'HH:mm');
+
+        this.parametros = JSON.parse(JSON.stringify(p));
+
       }
     });
   }
 
   registrarPonto() {
 
-    this.existeRegistroDia();
-
-    switch (true) {
-      case !this.parametros.entrada:
-        this.parametros.entrada = (this.parametros.entrada ? this.newDateFromHoraMin(this.parametros.entrada) : new Date());
-        this.salvarPonto();
-        break;
-      case !this.parametros.pausaini:
-        this.parametros.pausaini = (this.parametros.pausaini ? this.newDateFromHoraMin(this.parametros.pausaini): new Date());
-        this.salvarPonto();
-        break;
-      case !this.parametros.pausafim:
-        this.parametros.pausafim = (this.parametros.pausafim ? this.newDateFromHoraMin(this.parametros.pausafim) : new Date());
-        this.salvarPonto();
-        break;
-      case !this.parametros.saida:
-        this.parametros.saida = (this.parametros.saida ? this.newDateFromHoraMin(this.parametros.saida) : new Date());
-        this.salvarPonto();
-        break;
-      default:
-        break;
+    var pontoObj = JSON.parse(JSON.stringify(this.parametros));
+    for (var pontoAtributo in pontoObj) {
+      if (this.atributosPonto.indexOf(pontoAtributo) > -1) {
+        if (!pontoObj[pontoAtributo]) {
+          pontoObj[pontoAtributo] = new Date();
+          return this.salvarPonto(pontoObj);
+        }
+        else {
+          pontoObj[pontoAtributo] = this.newDateFromHoraMin(pontoObj[pontoAtributo], (pontoObj[pontoAtributo].indexOf(':') > -1 ? ':' : ''));
+        }
+      }
     }
-    console.log(this.parametros);
-    // this.parametros.entrada = (this.parametros.entrada ? this.newDateFromHoraMin(this.parametros.entrada) : new Date());
-    // this.parametros.pausaini = (this.parametros.pausaini ? this.newDateFromHoraMin(this.parametros.pausaini): new Date());
-    // this.parametros.pausafim = (this.parametros.pausafim ? this.newDateFromHoraMin(this.parametros.pausafim) : new Date());
-    // this.parametros.saida = (this.parametros.saida ? this.newDateFromHoraMin(this.parametros.saida) : new Date());
-    // this.salvarPonto();
-
-    this.existeRegistroDia();
-
+    return this.salvarPonto(pontoObj);
   }
 
   newDateFromHoraMin(horaMinStr, separator?) {
 
-    if(horaMinStr.length < 4) {
-      return false;  
+    if (horaMinStr.length < 4) {
+      return false;
     }
 
     var str = horaMinStr.split(separator ? separator : '');
     var hora;
     var min;
-    
-    if(separator == null || separator == '') {
-        hora = parseInt(str[0] + str[1]);
-        min = parseInt(str[2] + str[3]);
+
+    if (separator == null || separator == '') {
+      hora = parseInt(str[0] + str[1]);
+      min = parseInt(str[2] + str[3]);
     }
     else {
-        hora = parseInt(str[0]);
-        min = parseInt(str[1]);
+      hora = parseInt(str[0]);
+      min = parseInt(str[1]);
     }
 
-    if(hora > 23 || min > 59) {
-        return false;
+    if (hora > 23 || min > 59) {
+      return false;
     }
 
     var ano = new Date().getFullYear();
@@ -179,7 +179,47 @@ export class DashboardComponent implements OnInit {
     var segundos = new Date().getSeconds();
 
     var data = new Date(ano, mes, dia, hora, min, segundos);
-    return data.toString();
-}
+    return data;
+  }
+
+  criarAlert(tipoAlert: String) {
+    switch (tipoAlert) {
+      case 'sucessoRegistroPonto':
+
+        if (document.getElementById('alertContainer').childNodes.length <= 0) {
+          var alert = document.createElement('DIV');
+          var textoTitulo = document.createTextNode('Sucesso!');
+          var texto = document.createTextNode('Ponto registrado com sucesso!');
+          var textoBotao = document.createTextNode('x');
+
+          alert.classList.add('alert');
+          alert.classList.add('alert-success');
+          alert.classList.add('alert-dismissible');
+          
+          var button = document.createElement('BUTTON');
+          button.classList.add('close');
+          button.setAttribute('data-dismiss', 'alert');
+          button.setAttribute('aria-hidden', 'true');
+          button.appendChild(textoBotao);
+          
+          var titulo = document.createElement('H4');
+          
+          var icon = document.createElement('I');
+          icon.classList.add('icon');
+          icon.classList.add('fa');
+          icon.classList.add('fa-check');
+          icon.appendChild(textoTitulo);
+          
+          titulo.appendChild(icon);
+          
+          alert.appendChild(button);
+          alert.appendChild(titulo);
+          alert.appendChild(texto);
+          
+          document.getElementById('alertContainer').appendChild(alert);
+        }
+
+    }
+  }
 
 }
