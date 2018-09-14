@@ -118,7 +118,11 @@ public class PontoDiario {
 			long primeiroPeriodo = pausaini.getTime() - entrada.getTime();
 			long segundoPeriodo = saida.getTime() - pausafim.getTime();
 			long saldo = primeiroPeriodo + segundoPeriodo;
-			this.saldo = (Utils.OITO_HORAS_EM_MILLISEGUNDOS - saldo)*(-1);
+			if (Utils.getWeekDay(this.dataRegistro) == 6) {
+				this.saldo = (Utils.OITO_HORAS_EM_MILLISEGUNDOS - saldo)*(-1);
+			} else {
+				this.saldo = (Utils.NOVE_HORAS_EM_MILLISEGUNDOS - saldo)*(-1);
+			}
 		}
 	}
 }
