@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { CookieService } from 'ngx-cookie';
 
-import { HR_API } from './../app.api';
+import { HR_API, TEST_USER_ID } from './../app.api';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class PessoaService {
       this.idPessoa = this.cookieService.get('idPessoa');
     }
     else {
-      this.idPessoa = 6;
+      this.idPessoa = TEST_USER_ID;
     }
     return this.http.get(`${HR_API}/pessoas/${this.idPessoa}`);
   }
