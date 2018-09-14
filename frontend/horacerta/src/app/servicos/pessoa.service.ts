@@ -24,6 +24,7 @@ export class PessoaService {
     }
     else {
       this.idPessoa = TEST_USER_ID;
+
     }
     return this.http.get(`${HR_API}/pessoas/${this.idPessoa}`);
   }
