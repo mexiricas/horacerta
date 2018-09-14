@@ -4,7 +4,6 @@ import { PontoService } from '../../servicos/ponto.service';
 import { PessoaService } from '../../servicos/pessoa.service';
 import { LIMITE_MINIMO_TAMANHO_HORA } from './../../app.api';
 import { DatePipe } from '@angular/common';
-import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'hr-dashboard',
@@ -25,6 +24,8 @@ export class DashboardComponent implements OnInit {
 
   tamMinimo = LIMITE_MINIMO_TAMANHO_HORA;
   disablePontoButton = false;
+  pontoDaVez;
+
 
   customPatterns = {
     '0': { pattern: new RegExp('[0-9-]+') }
@@ -108,6 +109,7 @@ export class DashboardComponent implements OnInit {
 
   salvarPonto(ponto: any) {
     this.pontoService.salvarPonto(ponto).subscribe(() => {
+      this.disablePontoButton = false;
       this.criarAlert('sucessoRegistroPonto');
       this.existeRegistroDia();
     });
@@ -119,34 +121,52 @@ export class DashboardComponent implements OnInit {
     this.pontoService.consultarPonto(this.parametros).subscribe((p: any) => {
 
       if (p) {
-        console.log(p);
+
         var datePipe = new DatePipe('pt-BR');
 
-        if (p.entrada) p.entrada = datePipe.transform(p.entrada, 'HH:mm');
-        if (p.pausaini) p.pausaini = datePipe.transform(p.pausaini, 'HH:mm');
-        if (p.pausafim) p.pausafim = datePipe.transform(p.pausafim, 'HH:mm');
-        if (p.saida) p.saida = datePipe.transform(p.saida, 'HH:mm');
-
+        for (var pAtributo in p) {
+          if (this.atributosPonto.indexOf(pAtributo) > - 1) {
+            if (p[pAtributo]) {
+              p[pAtributo] = datePipe.transform(p[pAtributo], 'HH:mm');
+            }
+            else {
+              this.pontoDaVez = pAtributo;
+              this.parametros = JSON.parse(JSON.stringify(p));
+              console.log(this.pontoDaVez);
+              console.log(p);
+              return;
+            }
+          }
+        }
+        this.disablePontoButton = true;
         this.parametros = JSON.parse(JSON.stringify(p));
-
+      }
+      else {
+        this.pontoDaVez = 'entrada';
       }
     });
   }
 
   registrarPonto() {
 
+    this.disablePontoButton = true;
+
     var pontoObj = JSON.parse(JSON.stringify(this.parametros));
     for (var pontoAtributo in pontoObj) {
       if (this.atributosPonto.indexOf(pontoAtributo) > -1) {
-        if (!pontoObj[pontoAtributo]) {
-          pontoObj[pontoAtributo] = new Date();
-          return this.salvarPonto(pontoObj);
+        if (pontoObj[pontoAtributo] && pontoObj[pontoAtributo].length > 0) {
+          pontoObj[pontoAtributo] = this.newDateFromHoraMin(pontoObj[pontoAtributo], (pontoObj[pontoAtributo].indexOf(':') > -1 ? ':' : ''));
         }
         else {
-          pontoObj[pontoAtributo] = this.newDateFromHoraMin(pontoObj[pontoAtributo], (pontoObj[pontoAtributo].indexOf(':') > -1 ? ':' : ''));
+          pontoObj[pontoAtributo] = new Date();
+        }
+        if(pontoAtributo == this.pontoDaVez){
+          this.pontoDaVez = null;
+          return this.salvarPonto(pontoObj);
         }
       }
     }
+    this.pontoDaVez = null;
     return this.salvarPonto(pontoObj);
   }
 
@@ -195,27 +215,27 @@ export class DashboardComponent implements OnInit {
           alert.classList.add('alert');
           alert.classList.add('alert-success');
           alert.classList.add('alert-dismissible');
-          
+
           var button = document.createElement('BUTTON');
           button.classList.add('close');
           button.setAttribute('data-dismiss', 'alert');
           button.setAttribute('aria-hidden', 'true');
           button.appendChild(textoBotao);
-          
+
           var titulo = document.createElement('H4');
-          
+
           var icon = document.createElement('I');
           icon.classList.add('icon');
           icon.classList.add('fa');
           icon.classList.add('fa-check');
           icon.appendChild(textoTitulo);
-          
+
           titulo.appendChild(icon);
-          
+
           alert.appendChild(button);
           alert.appendChild(titulo);
           alert.appendChild(texto);
-          
+
           document.getElementById('alertContainer').appendChild(alert);
         }
 
