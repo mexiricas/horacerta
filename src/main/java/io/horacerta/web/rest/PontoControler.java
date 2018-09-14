@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.horacerta.model.PontoDiario;
-import io.horacerta.repository.PessoaDao;
 import io.horacerta.repository.PontoDao;
 import io.horacerta.service.PontoService;
 import io.horacerta.util.Utils;
@@ -26,14 +25,8 @@ public class PontoControler {
 	@Autowired
 	private PontoDao pontoDao;
 
-	@Autowired
-	private PessoaDao pessoaDao;
-
 	@RequestMapping(value = "/ponto/listagem", method = RequestMethod.POST)
 	public List<PontoDiario> listar(@RequestBody Map<String, String> parametros) {
-
-		//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		//String currentPrincipalName = authentication.getName(); 
 
 		Date dataInicial;
 		Date dataFinal;
@@ -62,8 +55,14 @@ public class PontoControler {
 
 	@RequestMapping(value = "/consultar/ponto", method = RequestMethod.POST)
 	public PontoDiario consultarPonto(@RequestBody PontoDiario ponto) throws ParseException {
-		return pontoDao.findByDataRegistro(ponto.getDataRegistro());
+		return pontoDao.findByDataRegistroAndPessoa(ponto.getDataRegistro(), ponto.getPessoa());
 
 	}
+	
+	@RequestMapping(value = "/consultar/ponto/completo", method = RequestMethod.POST)
+   public List<PontoDiario> consultarPontoMes(@RequestBody PontoDiario ponto) throws ParseException {
+      return pontoDao.findByPessoaOrderByDataRegistroDesc(ponto.getPessoa());
+
+   }
 
 }

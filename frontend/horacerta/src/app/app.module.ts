@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import localePt from '@angular/common/locales/pt';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './layout-admin-lte/menu/menu.component';
@@ -12,8 +13,12 @@ import { DashboardComponent } from './paginas/dashboard/dashboard.component';
 import { HistoricoComponent } from './paginas/historico/historico.component';
 import { PontoService } from './servicos/ponto.service';
 import { CookieModule } from 'ngx-cookie';
+import {NgxMaskModule} from 'ngx-mask'
 import { PaginarComponent } from './componentes/paginar/paginar.component';
 import { NomeUsuarioPipe } from './pipes/nome-usuario.pipe';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localePt, 'pt');
 
 
 @NgModule({
@@ -25,16 +30,17 @@ import { NomeUsuarioPipe } from './pipes/nome-usuario.pipe';
     DashboardComponent,
     HistoricoComponent,
     PaginarComponent,
-    NomeUsuarioPipe
+    NomeUsuarioPipe,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     routing,
-    CookieModule.forRoot()
+    CookieModule.forRoot(),
+    NgxMaskModule.forRoot()
   ],
-  providers: [PontoService],
+  providers: [PontoService, {provide: LOCALE_ID, useValue: 'pt-BR'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

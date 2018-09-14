@@ -35,8 +35,13 @@ public class UserDetailService implements UserDetailsService{
 		
 	}
 	
-	public void createUser(Users user) {
+	public void criarUsuario(Users user) {
 		userDao.save(user);
+	}
+	
+	public Boolean checarUsuarioExiste(String username) {
+		Users user = userDao.findByUsername(username);
+		return user != null;
 	}
 
 }
