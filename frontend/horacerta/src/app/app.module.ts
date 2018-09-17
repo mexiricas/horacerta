@@ -13,10 +13,11 @@ import { DashboardComponent } from './paginas/dashboard/dashboard.component';
 import { HistoricoComponent } from './paginas/historico/historico.component';
 import { PontoService } from './servicos/ponto.service';
 import { CookieModule } from 'ngx-cookie';
-import {NgxMaskModule} from 'ngx-mask'
+import {NgxMaskModule} from 'ngx-mask';
 import { PaginarComponent } from './componentes/paginar/paginar.component';
 import { NomeUsuarioPipe } from './pipes/nome-usuario.pipe';
 import { registerLocaleData } from '@angular/common';
+import { SaldoPipe } from './pipes/saldo.pipe';
 
 registerLocaleData(localePt, 'pt');
 
@@ -31,6 +32,7 @@ registerLocaleData(localePt, 'pt');
     HistoricoComponent,
     PaginarComponent,
     NomeUsuarioPipe,
+    SaldoPipe,
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,7 @@ export class HistoricoComponent implements OnInit {
 
   registros: any = [];
   filtroHistorico: any = [];
+  saldoTotal: number = 0;
 
   parametros: any = {
     id: null,
@@ -48,6 +49,7 @@ export class HistoricoComponent implements OnInit {
   listar() {
     this.pontoService.listar(this.parametros).subscribe(dados => {
       this.registros = dados;
+      this.calculaSaldo();
     });
   }
 
@@ -72,15 +74,22 @@ export class HistoricoComponent implements OnInit {
     return this.filtroHistorico;
   }
 
-  
-  anoAtual(){
+
+  anoAtual() {
     const date = new Date();
     this.parametros.ano = date.getFullYear();
     this.parametros.mes = (date.getMonth() + 1) % 13;
-    
+
     this.parametros.dataInicial = `${this.parametros.ano}${('0' + (date.getMonth() + 1)).substr(-2)}01`;
     this.parametros.dataFinal = `${this.parametros.ano}${('0' + ((date.getMonth() + 2) % 13)).substr(-2)}01`;
   }
 
-
+  calculaSaldo() {
+    this.registros.forEach((element) => {
+      this.saldoTotal += element.saldo;
+      console.log(element.saldo);
+      console.log(this.saldoTotal);
+      
+    });
+  }
 }

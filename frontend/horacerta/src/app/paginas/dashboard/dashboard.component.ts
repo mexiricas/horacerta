@@ -117,7 +117,7 @@ export class DashboardComponent implements OnInit {
 
   existeRegistroDia() {
     const hoje = new Date();
-    this.parametros.dataRegistro = hoje.getFullYear() + '-' + ('0' + (hoje.getMonth())).substr(-2) + '-' + ('0' + (hoje.getDate())).substr(-2);;
+    this.parametros.dataRegistro = hoje.getFullYear() + '-' + ('0' + (hoje.getMonth()+1)).substr(-2) + '-' + ('0' + (hoje.getDate())).substr(-2);;
     this.pontoService.consultarPonto(this.parametros).subscribe((p: any) => {
 
       if (p) {
@@ -132,8 +132,6 @@ export class DashboardComponent implements OnInit {
             else {
               this.pontoDaVez = pAtributo;
               this.parametros = JSON.parse(JSON.stringify(p));
-              console.log(this.pontoDaVez);
-              console.log(p);
               return;
             }
           }
