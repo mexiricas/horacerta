@@ -115,7 +115,8 @@
                       <td class="text-center">{{ h.pausafim | date:'HH:mm' }}</td>
                       <td class="text-center">{{ h.saida | date:'HH:mm' }}</td>
                       <td class="text-center">{{ h.saldo | saldo }}</td>
-                      <td> <i class="fa fa-fw fa-edit" data-toggle="modal" data-target="#modal-default" (click)="setPontoAtual(h)"> </i></td>
+                      <td> <i class="fa fa-fw fa-edit" data-toggle="modal" data-target="#modal-default" (click)="setPontoAtual(h)">
+                        </i></td>
                     </tr>
                     <tr class="odd" *ngIf="totalRegistro < 1">
                       <td valign="top" colspan="24" class="dataTables_empty" style="text-align: center">Nenhum registro
@@ -133,6 +134,7 @@
               <!-- FIM PAGINAÇÃO -->
               <label>Saldo Total: {{ saldoTotal | saldo }}
               </label>
+              <div   id="alertContainer"></div>
             </div>
           </div>
         </div>
@@ -152,7 +154,8 @@
             <div class="row">
               <div class="col-sm-3">
                 <div style="text-align: center">
-                  <input type="text" class="inputHora" specialCharacters="[':']" [patterns]="customPatterns" mask="00:00" [ngModel]="pontoAtual.entrada || '--:--'" (ngModelChange)="pontoAtual.entrada = $event" [minlength]="tamMinimo"/>
+                  <input type="text" class="inputHora" specialCharacters="[':']" [patterns]="customPatterns" mask="00:00"
+                    [ngModel]="pontoAtual.entrada || '--:--'" (ngModelChange)="pontoAtual.entrada = $event" [minlength]="tamMinimo" />
                   <p>Entrada</p>
                 </div>
               </div>
@@ -160,7 +163,9 @@
               <div class="col-sm-3">
                 <div style="text-align: center">
                   <!-- <h1>{{ pontoAtual.pausaini ? (pontoAtual.pausaini | date:'HH:mm:ss') : '--:--' }}</h1> -->
-                  <input type="text" class="inputHora" specialCharacters="['-']"  [patterns]="customPatterns" mask="00:00" [ngModel]="pontoAtual.pausaini || '--:--'" (ngModelChange)="pontoAtual.pausaini = $event" [minlength]="tamMinimo"/>
+                  <input type="text" class="inputHora" specialCharacters="['-']" [patterns]="customPatterns" mask="00:00"
+                    [ngModel]="pontoAtual.pausaini || '--:--'" (ngModelChange)="pontoAtual.pausaini = $event"
+                    [minlength]="tamMinimo" />
                   <p>Pausa</p>
                 </div>
               </div>
@@ -168,7 +173,9 @@
               <div class="col-sm-3">
                 <div style="text-align: center">
                   <!-- <h1>{{ pontoAtual.pausafim ? (pontoAtual.pausafim | date:'HH:mm:ss') : '--:--' }}</h1> -->
-                  <input type="text" class="inputHora" specialCharacters="['-']"  [patterns]="customPatterns" mask="00:00" [ngModel]="pontoAtual.pausafim || '--:--'" (ngModelChange)="pontoAtual.pausafim = $event" [minlength]="tamMinimo"/>
+                  <input type="text" class="inputHora" specialCharacters="['-']" [patterns]="customPatterns" mask="00:00"
+                    [ngModel]="pontoAtual.pausafim || '--:--'" (ngModelChange)="pontoAtual.pausafim = $event"
+                    [minlength]="tamMinimo" />
                   <p>Retorno</p>
                 </div>
               </div>
@@ -176,7 +183,8 @@
               <div class="col-sm-3">
                 <div style="text-align: center">
                   <!-- <h1>{{ pontoAtual.saida ? (pontoAtual.saida | date:'HH:mm:ss') : '--:--' }}</h1> -->
-                  <input type="text" class="inputHora" specialCharacters="['-']"  [patterns]="customPatterns" mask="00:00" [ngModel]="pontoAtual.saida || '--:--'" (ngModelChange)="pontoAtual.saida = $event" [minlength]="tamMinimo"/>
+                  <input type="text" class="inputHora" specialCharacters="['-']" [patterns]="customPatterns" mask="00:00"
+                    [ngModel]="pontoAtual.saida || '--:--'" (ngModelChange)="pontoAtual.saida = $event" [minlength]="tamMinimo" />
                   <p>Saída</p>
                 </div>
               </div>
@@ -184,7 +192,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
-            <button type="button" (click)="novoPerfil()" class="btn btn-primary" id="salvarAtivoButton" >Salvar</button>
+            <button type="button" (click)="salvarPonto(pontoAtual)" class="btn btn-primary" id="salvarPontoButton" data-dismiss="modal">Salvar</button>
           </div>
         </div>
         <!-- /.modal-content -->

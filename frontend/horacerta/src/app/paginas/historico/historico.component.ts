@@ -4,13 +4,14 @@ import { PontoService } from '../../servicos/ponto.service';
 import { PessoaService } from '../../servicos/pessoa.service';
 import { InputHora } from '../../util/input.hora.util';
 import { DatePipe } from '@angular/common';
+import { AlertCreator } from '../../util/alert.util';
 
 
 @Component({
   selector: 'hr-historico',
   templateUrl: './historico.component.html',
   styleUrls: ['./historico.component.css'],
-  providers: [InputHora]
+  providers: [InputHora,AlertCreator]
 })
 export class HistoricoComponent implements OnInit {
 
@@ -42,11 +43,10 @@ export class HistoricoComponent implements OnInit {
   qtdPorPagina: number = 10;
   qtdPaginas: number;
   totalRegistro;
-  salvarAtivo = false;
 
   atributosPonto = ['entrada', 'pausaini', 'pausafim', 'saida'];
 
-  
+
   customPatterns = {
     '0': { pattern: new RegExp('[0-9-]+') }
   };
@@ -57,6 +57,7 @@ export class HistoricoComponent implements OnInit {
   constructor(
     private pontoService: PontoService,
     private pessoaService: PessoaService,
+    private alertCreator: AlertCreator,
     private horaUtil: InputHora) { }
 
   ngOnInit() {
@@ -107,14 +108,15 @@ export class HistoricoComponent implements OnInit {
   }
 
   calculaSaldo() {
+    this.saldoTotal = 0;
     this.registros.forEach((element) => {
       this.saldoTotal += element.saldo;
     });
   }
 
   setPontoAtual(ponto: any) {
-    this.horaUtil.setInputMask(document, 'salvarAtivoButton')
-
+    this.horaUtil.setInputMask(document, 'salvarPontoButton')
+    
     this.pontoAtual = JSON.parse(JSON.stringify(ponto));
 
     var datePipe = new DatePipe('pt-BR');
@@ -122,7 +124,7 @@ export class HistoricoComponent implements OnInit {
     for (var pAtributo in this.pontoAtual) {
       console.log(pAtributo);
       console.log(this.pontoAtual[pAtributo]);
-      
+
       if (this.atributosPonto.indexOf(pAtributo) > - 1) {
         if (this.pontoAtual[pAtributo]) {
           console.log(this.pontoAtual[pAtributo]);
@@ -132,5 +134,25 @@ export class HistoricoComponent implements OnInit {
       }
     }
 
+  }
+
+  salvarPonto(ponto: any) {
+
+    var pontoToSave = JSON.parse(JSON.stringify(ponto));
+
+    for (var pAtributo in pontoToSave) {
+      if (this.atributosPonto.indexOf(pAtributo) > - 1) {
+        if (pontoToSave[pAtributo]) {
+          pontoToSave[pAtributo] = this.horaUtil.newDateFromHoraMin(pontoToSave[pAtributo]);
+        }
+      }
+    }
+    console.log(pontoToSave);
+    
+    this.pontoService.salvarPonto(pontoToSave).subscribe(() => {
+      //this.disablePontoButton = false;
+      this.alertCreator.criarAlert('sucessoRegistroPonto', 'alertContainer');
+      this.listar();
+    });
   }
 }
