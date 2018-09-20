@@ -2,12 +2,15 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 
 import { PontoService } from '../../servicos/ponto.service';
 import { PessoaService } from '../../servicos/pessoa.service';
+import { InputHora } from '../../util/input.hora.util';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
   selector: 'hr-historico',
   templateUrl: './historico.component.html',
-  styleUrls: ['./historico.component.css']
+  styleUrls: ['./historico.component.css'],
+  providers: [InputHora]
 })
 export class HistoricoComponent implements OnInit {
 
@@ -25,17 +28,36 @@ export class HistoricoComponent implements OnInit {
     pessoa: {}
   }
 
+  pontoAtual: any = {
+    id: null,
+    entrada: null,
+    pausaini: null,
+    pausafim: null,
+    saida: null,
+    dataRegistro: null,
+    pessoa: {}
+  }
+
   pagina: number = 0;
   qtdPorPagina: number = 10;
   qtdPaginas: number;
   totalRegistro;
-  habilitarBotao = false;
+  salvarAtivo = false;
+
+  atributosPonto = ['entrada', 'pausaini', 'pausafim', 'saida'];
+
+  
+  customPatterns = {
+    '0': { pattern: new RegExp('[0-9-]+') }
+  };
+
 
   static atualizacao = new EventEmitter<any>();
 
   constructor(
     private pontoService: PontoService,
-    private pessoaService: PessoaService) { }
+    private pessoaService: PessoaService,
+    private horaUtil: InputHora) { }
 
   ngOnInit() {
     this.pessoaService.consultarPessoa().subscribe(pessoa => {
@@ -43,6 +65,7 @@ export class HistoricoComponent implements OnInit {
       this.parametros.pessoa.id = this.pessoaService.idPessoa;
       this.anoAtual();
       this.listar();
+      this.horaUtil.setInputMask(document, this.salvarAtivo)
     });
   }
 
@@ -87,9 +110,27 @@ export class HistoricoComponent implements OnInit {
   calculaSaldo() {
     this.registros.forEach((element) => {
       this.saldoTotal += element.saldo;
-      console.log(element.saldo);
-      console.log(this.saldoTotal);
-      
     });
+  }
+
+  setPontoAtual(ponto: any) {
+
+    this.pontoAtual = JSON.parse(JSON.stringify(ponto));
+
+    var datePipe = new DatePipe('pt-BR');
+
+    for (var pAtributo in this.pontoAtual) {
+      console.log(pAtributo);
+      console.log(this.pontoAtual[pAtributo]);
+      
+      if (this.atributosPonto.indexOf(pAtributo) > - 1) {
+        if (this.pontoAtual[pAtributo]) {
+          console.log(this.pontoAtual[pAtributo]);
+          this.pontoAtual[pAtributo] = datePipe.transform(this.pontoAtual[pAtributo], 'HH:mm');
+        }
+
+      }
+    }
+
   }
 }

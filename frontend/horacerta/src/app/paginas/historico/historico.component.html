@@ -110,12 +110,12 @@
                   <tbody>
                     <tr *ngFor="let h of popularTabela(registros)">
                       <td class="text-center">{{ h.dataRegistro | date:'dd/MM/yyyy' }}</td>
-                      <td class="text-center">{{ h.entrada | date:'HH:MM' }}</td>
+                      <td class="text-center">{{ h.entrada | date:'HH:mm' }}</td>
                       <td class="text-center">{{ h.pausaini | date:'HH:mm'}}</td>
                       <td class="text-center">{{ h.pausafim | date:'HH:mm' }}</td>
                       <td class="text-center">{{ h.saida | date:'HH:mm' }}</td>
                       <td class="text-center">{{ h.saldo | saldo }}</td>
-                      <td> <i class="fa fa-fw fa-edit" data-toggle="modal" data-target="#modal-default"></i></td>
+                      <td> <i class="fa fa-fw fa-edit" data-toggle="modal" data-target="#modal-default" (click)="setPontoAtual(h)"> </i></td>
                     </tr>
                     <tr class="odd" *ngIf="totalRegistro < 1">
                       <td valign="top" colspan="24" class="dataTables_empty" style="text-align: center">Nenhum registro
@@ -149,16 +149,42 @@
             <h4 class="modal-title">Alterar Registros</h4>
           </div>
           <div class="modal-body">
-            <div class="register-box-body">
-              <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Chave de acesso" [(ngModel)]="chave">
-                <span class="glyphicon 	glyphicon glyphicon-qrcode form-control-feedback"></span>
+            <div class="row">
+              <div class="col-sm-3">
+                <div style="text-align: center">
+                  <input type="text" class="inputHora" specialCharacters="[':']" [patterns]="customPatterns" mask="00:00" [ngModel]="pontoAtual.entrada || '--:--'" (ngModelChange)="pontoAtual.entrada = $event" [minlength]="tamMinimo"/>
+                  <p>Entrada</p>
+                </div>
+              </div>
+
+              <div class="col-sm-3">
+                <div style="text-align: center">
+                  <!-- <h1>{{ pontoAtual.pausaini ? (pontoAtual.pausaini | date:'HH:mm:ss') : '--:--' }}</h1> -->
+                  <input type="text" class="inputHora" specialCharacters="['-']"  [patterns]="customPatterns" mask="00:00" [ngModel]="pontoAtual.pausaini || '--:--'" (ngModelChange)="pontoAtual.pausaini = $event" [minlength]="tamMinimo"/>
+                  <p>Pausa</p>
+                </div>
+              </div>
+
+              <div class="col-sm-3">
+                <div style="text-align: center">
+                  <!-- <h1>{{ pontoAtual.pausafim ? (pontoAtual.pausafim | date:'HH:mm:ss') : '--:--' }}</h1> -->
+                  <input type="text" class="inputHora" specialCharacters="['-']"  [patterns]="customPatterns" mask="00:00" [ngModel]="pontoAtual.pausafim || '--:--'" (ngModelChange)="pontoAtual.pausafim = $event" [minlength]="tamMinimo"/>
+                  <p>Retorno</p>
+                </div>
+              </div>
+
+              <div class="col-sm-3">
+                <div style="text-align: center">
+                  <!-- <h1>{{ pontoAtual.saida ? (pontoAtual.saida | date:'HH:mm:ss') : '--:--' }}</h1> -->
+                  <input type="text" class="inputHora" specialCharacters="['-']"  [patterns]="customPatterns" mask="00:00" [ngModel]="pontoAtual.saida || '--:--'" (ngModelChange)="pontoAtual.saida = $event" [minlength]="tamMinimo"/>
+                  <p>Saída</p>
+                </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
-            <button type="button" (click)="novoPerfil()" class="btn btn-primary">Salvar novo Perfil</button>
+            <button type="button" (click)="novoPerfil()" class="btn btn-primary" [disabled]="salvarAtivo" >Salvar</button>
           </div>
         </div>
         <!-- /.modal-content -->
