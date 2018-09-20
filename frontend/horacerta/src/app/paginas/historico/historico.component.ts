@@ -1,3 +1,4 @@
+import { LIMITE_MINIMO_TAMANHO_HORA } from './../../app.api';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 
 import { PontoService } from '../../servicos/ponto.service';
@@ -43,9 +44,9 @@ export class HistoricoComponent implements OnInit {
   qtdPorPagina: number = 10;
   qtdPaginas: number;
   totalRegistro;
+  tamMinimo = LIMITE_MINIMO_TAMANHO_HORA;
 
   atributosPonto = ['entrada', 'pausaini', 'pausafim', 'saida'];
-
 
   customPatterns = {
     '0': { pattern: new RegExp('[0-9-]+') }
@@ -122,12 +123,8 @@ export class HistoricoComponent implements OnInit {
     var datePipe = new DatePipe('pt-BR');
 
     for (var pAtributo in this.pontoAtual) {
-      console.log(pAtributo);
-      console.log(this.pontoAtual[pAtributo]);
-
       if (this.atributosPonto.indexOf(pAtributo) > - 1) {
         if (this.pontoAtual[pAtributo]) {
-          console.log(this.pontoAtual[pAtributo]);
           this.pontoAtual[pAtributo] = datePipe.transform(this.pontoAtual[pAtributo], 'HH:mm');
         }
 
@@ -150,7 +147,6 @@ export class HistoricoComponent implements OnInit {
     console.log(pontoToSave);
     
     this.pontoService.salvarPonto(pontoToSave).subscribe(() => {
-      //this.disablePontoButton = false;
       this.alertCreator.criarAlert('sucessoRegistroPonto', 'alertContainer');
       this.listar();
     });

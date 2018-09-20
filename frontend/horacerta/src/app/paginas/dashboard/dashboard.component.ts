@@ -100,6 +100,7 @@ export class DashboardComponent implements OnInit {
             }
           }
         }
+        console.log("Todos os pontos preenchidos");
         this.disablePontoButton = true;
         this.parametros = JSON.parse(JSON.stringify(p));
       }
