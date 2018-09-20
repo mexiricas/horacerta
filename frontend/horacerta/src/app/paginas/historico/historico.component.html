@@ -108,10 +108,10 @@
                   <tbody>
                     <tr *ngFor="let h of popularTabela(registros)">
                       <td class="text-center">{{ h.dataRegistro | date:'dd/MM/yyyy' }}</td>
-                      <td class="text-center">{{ h.entrada | date:'HH:mm:ss' }}</td>
-                      <td class="text-center">{{ h.pausaini | date:'HH:mm:ss'}}</td>
-                      <td class="text-center">{{ h.pausafim | date:'HH:mm:ss' }}</td>
-                      <td class="text-center">{{ h.saida | date:'HH:mm:ss' }}</td>
+                      <td class="text-center">{{ h.entrada | date:'HH:MM' }}</td>
+                      <td class="text-center">{{ h.pausaini | date:'HH:mm'}}</td>
+                      <td class="text-center">{{ h.pausafim | date:'HH:mm' }}</td>
+                      <td class="text-center">{{ h.saida | date:'HH:mm' }}</td>
                       <td class="text-center">{{ h.saldo | saldo }}</td>
                     </tr>
                     <tr class="odd" *ngIf="totalRegistro < 1">

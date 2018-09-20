@@ -4,11 +4,14 @@ import { PontoService } from '../../servicos/ponto.service';
 import { PessoaService } from '../../servicos/pessoa.service';
 import { LIMITE_MINIMO_TAMANHO_HORA } from './../../app.api';
 import { DatePipe } from '@angular/common';
+import { AlertCreator } from '../../util/alert.util';
+import { InputHora } from '../../util/input.hora.util';
 
 @Component({
   selector: 'hr-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  providers:[InputHora, AlertCreator]
 })
 export class DashboardComponent implements OnInit {
 
@@ -38,7 +41,9 @@ export class DashboardComponent implements OnInit {
   mes;
   constructor(
     private pontoService: PontoService,
-    private pessoaService: PessoaService
+    private pessoaService: PessoaService,
+    private alertCreator: AlertCreator,
+    private input: InputHora
   ) { }
 
   ngOnInit() {
@@ -50,48 +55,7 @@ export class DashboardComponent implements OnInit {
       this.existeRegistroDia();
     });
 
-    let pontoInputs = document.getElementsByClassName('inputHora');
-
-    for (let i = 0; i < pontoInputs.length; i++) {
-
-      pontoInputs[i].addEventListener('input', (e: any) => {
-        var target = e.target;
-        var position = target.selectionStart;
-
-        var horaPonto = target.value;
-
-        if (horaPonto.length < LIMITE_MINIMO_TAMANHO_HORA) {
-          horaPonto = horaPonto + "-";
-        }
-
-        target.value = horaPonto;
-        if (target.value.charAt(position - 1) == ':') {
-          target.selectionEnd = position - 1;
-        }
-
-        else if (position == 5 && target.value.charAt(position - 1).match(/^[0-9]+$/) == null) {
-          target.selectionEnd = 0;
-        }
-        else if (position == 5 && target.value.charAt(position - 1).match(/^[0-9]+$/) != null) {
-          target.selectionEnd = 5;
-        }
-        else {
-          target.selectionEnd = position;
-        }
-
-        if (!this.newDateFromHoraMin(target.value, (target.value.indexOf(':') > -1 ? ':' : ''))) {
-          target.classList.add("horaInvalida");
-          this.disablePontoButton = true;
-        }
-        else {
-          target.classList.remove("horaInvalida");
-          if (document.getElementsByClassName("horaInvalida").length <= 0) {
-            this.disablePontoButton = false;
-          }
-        }
-
-      })
-    }
+    this.input.setInputMask(document, this.disablePontoButton);
 
   }
 
@@ -110,7 +74,7 @@ export class DashboardComponent implements OnInit {
   salvarPonto(ponto: any) {
     this.pontoService.salvarPonto(ponto).subscribe(() => {
       this.disablePontoButton = false;
-      this.criarAlert('sucessoRegistroPonto');
+      this.alertCreator.criarAlert('sucessoRegistroPonto', 'alertContainer');
       this.existeRegistroDia();
     });
   }
@@ -153,7 +117,7 @@ export class DashboardComponent implements OnInit {
     for (var pontoAtributo in pontoObj) {
       if (this.atributosPonto.indexOf(pontoAtributo) > -1) {
         if (pontoObj[pontoAtributo] && pontoObj[pontoAtributo].length > 0) {
-          pontoObj[pontoAtributo] = this.newDateFromHoraMin(pontoObj[pontoAtributo], (pontoObj[pontoAtributo].indexOf(':') > -1 ? ':' : ''));
+          pontoObj[pontoAtributo] = this.input.newDateFromHoraMin(pontoObj[pontoAtributo], (pontoObj[pontoAtributo].indexOf(':') > -1 ? ':' : ''));
         }
         else {
           pontoObj[pontoAtributo] = new Date();
@@ -166,78 +130,6 @@ export class DashboardComponent implements OnInit {
     }
     this.pontoDaVez = null;
     return this.salvarPonto(pontoObj);
-  }
-
-  newDateFromHoraMin(horaMinStr, separator?) {
-
-    if (horaMinStr.length < 4) {
-      return false;
-    }
-
-    var str = horaMinStr.split(separator ? separator : '');
-    var hora;
-    var min;
-
-    if (separator == null || separator == '') {
-      hora = parseInt(str[0] + str[1]);
-      min = parseInt(str[2] + str[3]);
-    }
-    else {
-      hora = parseInt(str[0]);
-      min = parseInt(str[1]);
-    }
-
-    if (hora > 23 || min > 59) {
-      return false;
-    }
-
-    var ano = new Date().getFullYear();
-    var mes = new Date().getMonth();
-    var dia = new Date().getDate();
-    var segundos = new Date().getSeconds();
-
-    var data = new Date(ano, mes, dia, hora, min, segundos);
-    return data;
-  }
-
-  criarAlert(tipoAlert: String) {
-    switch (tipoAlert) {
-      case 'sucessoRegistroPonto':
-
-        if (document.getElementById('alertContainer').childNodes.length <= 0) {
-          var alert = document.createElement('DIV');
-          var textoTitulo = document.createTextNode('Sucesso!');
-          var texto = document.createTextNode('Ponto registrado com sucesso!');
-          var textoBotao = document.createTextNode('x');
-
-          alert.classList.add('alert');
-          alert.classList.add('alert-success');
-          alert.classList.add('alert-dismissible');
-
-          var button = document.createElement('BUTTON');
-          button.classList.add('close');
-          button.setAttribute('data-dismiss', 'alert');
-          button.setAttribute('aria-hidden', 'true');
-          button.appendChild(textoBotao);
-
-          var titulo = document.createElement('H4');
-
-          var icon = document.createElement('I');
-          icon.classList.add('icon');
-          icon.classList.add('fa');
-          icon.classList.add('fa-check');
-          icon.appendChild(textoTitulo);
-
-          titulo.appendChild(icon);
-
-          alert.appendChild(button);
-          alert.appendChild(titulo);
-          alert.appendChild(texto);
-
-          document.getElementById('alertContainer').appendChild(alert);
-        }
-
-    }
   }
 
 }
