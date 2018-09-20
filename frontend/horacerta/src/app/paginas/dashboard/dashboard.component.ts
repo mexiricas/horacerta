@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
       this.existeRegistroDia();
     });
 
-    this.input.setInputMask(document, this.disablePontoButton);
+    this.input.setInputMask(document, 'registrarPontoButton');
 
   }
 

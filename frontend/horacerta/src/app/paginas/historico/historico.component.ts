@@ -65,7 +65,6 @@ export class HistoricoComponent implements OnInit {
       this.parametros.pessoa.id = this.pessoaService.idPessoa;
       this.anoAtual();
       this.listar();
-      this.horaUtil.setInputMask(document, this.salvarAtivo)
     });
   }
 
@@ -114,6 +113,7 @@ export class HistoricoComponent implements OnInit {
   }
 
   setPontoAtual(ponto: any) {
+    this.horaUtil.setInputMask(document, 'salvarAtivoButton')
 
     this.pontoAtual = JSON.parse(JSON.stringify(ponto));
 

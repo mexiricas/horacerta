@@ -1,8 +1,13 @@
 import { LIMITE_MINIMO_TAMANHO_HORA } from './../app.api';
 
 export class InputHora {
-    setInputMask(document: any, disablePontoButton: any) {
+    setInputMask(document: any, disablePontoButtonId: any) {
+
         let pontoInputs = document.getElementsByClassName('inputHora');
+        let button = document.getElementById(disablePontoButtonId);
+
+        //Limpar os status para cada vez que a máscara for utilizada
+        this.cleanEventListeners(pontoInputs, button);
 
         for (let i = 0; i < pontoInputs.length; i++) {
 
@@ -33,12 +38,12 @@ export class InputHora {
 
                 if (!this.newDateFromHoraMin(target.value, (target.value.indexOf(':') > -1 ? ':' : ''))) {
                     target.classList.add("horaInvalida");
-                    disablePontoButton = true;
+                    document.getElementById(disablePontoButtonId).disabled = true;
                 }
                 else {
                     target.classList.remove("horaInvalida");
                     if (document.getElementsByClassName("horaInvalida").length <= 0) {
-                        disablePontoButton = false;
+                        document.getElementById(disablePontoButtonId).disabled = false;
                     }
                 }
 
@@ -76,5 +81,18 @@ export class InputHora {
 
         var data = new Date(ano, mes, dia, hora, min, segundos);
         return data;
+    }
+
+    cleanEventListeners(inputElements:any, buttonElement){
+        console.log(inputElements);
+        for(let i = 0; i < inputElements.length; i++) {
+            inputElements[i].removeEventListener('input', this.cleanErrorStyle(inputElements[i], buttonElement))
+        }
+    }
+x
+    cleanErrorStyle(element, buttonElement) {
+        console.log(element);
+        element.classList.remove('horaInvalida');
+        buttonElement.disabled = false;
     }
 }
