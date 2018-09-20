@@ -84,14 +84,11 @@ export class InputHora {
     }
 
     cleanEventListeners(inputElements:any, buttonElement){
-        console.log(inputElements);
         for(let i = 0; i < inputElements.length; i++) {
             inputElements[i].removeEventListener('input', this.cleanErrorStyle(inputElements[i], buttonElement))
         }
     }
-x
     cleanErrorStyle(element, buttonElement) {
-        console.log(element);
         element.classList.remove('horaInvalida');
         buttonElement.disabled = false;
     }
