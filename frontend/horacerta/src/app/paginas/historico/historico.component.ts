@@ -12,7 +12,7 @@ import { AlertCreator } from '../../util/alert.util';
   selector: 'hr-historico',
   templateUrl: './historico.component.html',
   styleUrls: ['./historico.component.css'],
-  providers: [InputHora,AlertCreator]
+  providers: [InputHora, AlertCreator]
 })
 export class HistoricoComponent implements OnInit {
 
@@ -117,7 +117,7 @@ export class HistoricoComponent implements OnInit {
 
   setPontoAtual(ponto: any) {
     this.horaUtil.setInputMask(document, 'salvarPontoButton')
-    
+
     this.pontoAtual = JSON.parse(JSON.stringify(ponto));
 
     var datePipe = new DatePipe('pt-BR');
@@ -144,8 +144,6 @@ export class HistoricoComponent implements OnInit {
         }
       }
     }
-    console.log(pontoToSave);
-    
     this.pontoService.salvarPonto(pontoToSave).subscribe(() => {
       this.alertCreator.criarAlert('sucessoRegistroPonto', 'alertContainer');
       this.listar();

@@ -115,8 +115,9 @@
                       <td class="text-center">{{ h.pausafim | date:'HH:mm' }}</td>
                       <td class="text-center">{{ h.saida | date:'HH:mm' }}</td>
                       <td class="text-center">{{ h.saldo | saldo }}</td>
-                      <td> <i class="fa fa-fw fa-edit" data-toggle="modal" data-target="#modal-default" (click)="setPontoAtual(h)">
-                        </i></td>
+                      <td style="text-align: center">
+                        <a data-toggle="modal" data-target="#modal-default" (click)="setPontoAtual(h)"><i class="fa fa-fw fa-edit"></i></a>
+                      </td>
                     </tr>
                     <tr class="odd" *ngIf="totalRegistro < 1">
                       <td valign="top" colspan="24" class="dataTables_empty" style="text-align: center">Nenhum registro
@@ -134,7 +135,7 @@
               <!-- FIM PAGINAÇÃO -->
               <label>Saldo Total: {{ saldoTotal | saldo }}
               </label>
-              <div   id="alertContainer"></div>
+              <div id="alertContainer"></div>
             </div>
           </div>
         </div>
@@ -192,7 +193,8 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
-            <button type="button" (click)="salvarPonto(pontoAtual)" class="btn btn-primary" id="salvarPontoButton" data-dismiss="modal">Salvar</button>
+            <button type="button" (click)="salvarPonto(pontoAtual)" class="btn btn-primary" id="salvarPontoButton"
+              data-dismiss="modal">Salvar</button>
           </div>
         </div>
         <!-- /.modal-content -->
