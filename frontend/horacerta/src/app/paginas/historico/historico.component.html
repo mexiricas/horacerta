@@ -75,7 +75,8 @@
                 <div class="col-sm-6">
                   <div class="dataTables_length" id="example1_length">
                     <label>
-                      <select name="example1_length" aria-controls="example1" class="form-control input-sm" [(ngModel)]="qtdPorPagina" (change)="paginar(1)">
+                      <select name="example1_length" aria-controls="example1" class="form-control input-sm" [(ngModel)]="qtdPorPagina"
+                        (change)="paginar(1)">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
@@ -102,6 +103,7 @@
                       <th class="text-center">Volta Intervalo</th>
                       <th class="text-center">Saída</th>
                       <th class="text-center">Saldo</th>
+                      <th class="text-center">Editar</th>
                     </tr>
                   </thead>
 
@@ -113,6 +115,7 @@
                       <td class="text-center">{{ h.pausafim | date:'HH:mm' }}</td>
                       <td class="text-center">{{ h.saida | date:'HH:mm' }}</td>
                       <td class="text-center">{{ h.saldo | saldo }}</td>
+                      <td> <i class="fa fa-fw fa-edit" data-toggle="modal" data-target="#modal-default"></i></td>
                     </tr>
                     <tr class="odd" *ngIf="totalRegistro < 1">
                       <td valign="top" colspan="24" class="dataTables_empty" style="text-align: center">Nenhum registro
@@ -124,11 +127,8 @@
               </div>
 
               <!-- PAGINAÇÃO -->
-              <hr-paginar [qtdPorPagina]="qtdPorPagina" 
-              [totalRegistros]="totalRegistro" 
-              [qtdAdjacentes]="3"
-              (onPaginate)="paginar($event)" 
-              *ngIf="totalRegistro">
+              <hr-paginar [qtdPorPagina]="qtdPorPagina" [totalRegistros]="totalRegistro" [qtdAdjacentes]="3"
+                (onPaginate)="paginar($event)" *ngIf="totalRegistro">
               </hr-paginar>
               <!-- FIM PAGINAÇÃO -->
               <label>Saldo Total: {{ saldoTotal | saldo }}
@@ -138,5 +138,33 @@
         </div>
       </div>
     </div>
+    <!-- inicio-modal-content -->
+    <div class="modal fade" id="modal-default" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">Alterar Registros</h4>
+          </div>
+          <div class="modal-body">
+            <div class="register-box-body">
+              <div class="form-group has-feedback">
+                <input type="password" class="form-control" placeholder="Chave de acesso" [(ngModel)]="chave">
+                <span class="glyphicon 	glyphicon glyphicon-qrcode form-control-feedback"></span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+            <button type="button" (click)="novoPerfil()" class="btn btn-primary">Salvar novo Perfil</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <br />
   </section>
 </div>
