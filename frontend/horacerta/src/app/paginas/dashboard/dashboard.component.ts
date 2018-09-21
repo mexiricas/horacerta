@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
   }
 
   tamMinimo = LIMITE_MINIMO_TAMANHO_HORA;
-  disablePontoButton = false;
+  disablePontoButton = true;
   pontoDaVez;
 
 
@@ -96,11 +96,11 @@ export class DashboardComponent implements OnInit {
             else {
               this.pontoDaVez = pAtributo;
               this.parametros = JSON.parse(JSON.stringify(p));
+              this.disablePontoButton = false;
               return;
             }
           }
         }
-        console.log("Todos os pontos preenchidos");
         this.disablePontoButton = true;
         this.parametros = JSON.parse(JSON.stringify(p));
       }
