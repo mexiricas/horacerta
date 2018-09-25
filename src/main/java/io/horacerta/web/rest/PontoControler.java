@@ -49,7 +49,13 @@ public class PontoControler {
 
 	@RequestMapping(value = "/ponto", method = RequestMethod.POST)
 	public PontoDiario inserir(@RequestBody PontoDiario ponto) throws ParseException {
-		return pontoDao.save(ponto);
+		
+		PontoDiario existe = pontoDao.findByDataRegistroAndPessoa(ponto.getDataRegistro(), ponto.getPessoa());
+		if (existe == null) {
+			return pontoDao.save(ponto);
+		} else {
+			return null;
+		}
 
 	}
 
