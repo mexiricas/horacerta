@@ -49,12 +49,16 @@ public class PontoControler {
 
 	@RequestMapping(value = "/ponto", method = RequestMethod.POST)
 	public PontoDiario inserir(@RequestBody PontoDiario ponto) throws ParseException {
-		
-		PontoDiario existe = pontoDao.findByDataRegistroAndPessoa(ponto.getDataRegistro(), ponto.getPessoa());
-		if (existe == null) {
-			return pontoDao.save(ponto);
+
+		if (ponto.getId() == 0) {
+			PontoDiario existe = pontoDao.findByDataRegistroAndPessoa(ponto.getDataRegistro(), ponto.getPessoa());
+			if (existe == null) {
+				return pontoDao.save(ponto);
+			} else {
+				return null;
+			}
 		} else {
-			return null;
+			return pontoDao.save(ponto);
 		}
 
 	}
@@ -64,11 +68,11 @@ public class PontoControler {
 		return pontoDao.findByDataRegistroAndPessoa(ponto.getDataRegistro(), ponto.getPessoa());
 
 	}
-	
-	@RequestMapping(value = "/consultar/ponto/completo", method = RequestMethod.POST)
-   public List<PontoDiario> consultarPontoMes(@RequestBody PontoDiario ponto) throws ParseException {
-      return pontoDao.findByPessoaOrderByDataRegistroDesc(ponto.getPessoa());
 
-   }
+	@RequestMapping(value = "/consultar/ponto/completo", method = RequestMethod.POST)
+	public List<PontoDiario> consultarPontoMes(@RequestBody PontoDiario ponto) throws ParseException {
+		return pontoDao.findByPessoaOrderByDataRegistroDesc(ponto.getPessoa());
+
+	}
 
 }
