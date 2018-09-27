@@ -4,3 +4,16 @@
     outline-offset: -3px;
     outline-width: 2px
 }
+
+.mdl-button, .mdl-js-button, .mdl-button--fab, .mdl-button--colored, .mdl-button--fab.mdl-button--colored{
+    color: #fff;
+    background-color: #3c8dbc;
+}
+
+.mdl-button:hover {
+    background-color: #3c8dbc
+}
+
+.mdl-button--fab.mdl-button--colored:focus:not(:active) {
+    background-color: #3c8dbc
+}

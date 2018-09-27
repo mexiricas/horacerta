@@ -28,6 +28,8 @@ public class Pessoa {
 	private Date dataRegistro = new Date();
 
 	private String username;
+	
+	private String telefone;
 
 	public String getUsername() {
 		return username;
@@ -59,6 +61,14 @@ public class Pessoa {
 
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 

@@ -2,140 +2,186 @@
 <html lang="pt-BR">
 
 <head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	 crossorigin="anonymous">
-	<style>
-		html, body, .container {
-			 height: 100%;
-		 }
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<style>
+html, body, .container {
+	height: 100%;
+}
 
-		 body {
-			background-image: url("../horacerta-1.jpg");
-			background-repeat: no-repeat;
-			background-size: 100% 100%;
-			/*background-size:1450px;*/
-		}
-		.card {
-			padding-right: 0px;
-			padding-left: 0px;
-		}
-		.card {
-			background: rgba(255, 255, 255, 0.6);
-		}
-		.card-img-top {
-			opacity: 0.5;
-		}
-		.input, .input:focus {
-			background-color: rgba(255, 255, 255, 0.6);
-		}
-		
-		.form-control:focus {
-			border-color: rgba(119, 86, 31, 0.6);
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(119, 86, 31, 0.6);
-		}
-		.btn {
-			background-color: rgba(119, 86, 31, 0.6);
-			border-color: rgba(119, 86, 31, 0.6);
-		}
-		.btn:hover {
-			background-color: rgba(119, 87, 31, 0.8);
-			border-color: rgba(119, 86, 31, 0.6);
-		}
-		.btn:disabled {
-			background-color: rgba(154, 120, 59, 0.8);
-			border-color: rgba(154, 120, 59, 0.8);
-		}
-		
-		.font-login {
-			font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-			color: rgba(119, 86, 31, 0.8);
-			font-style: normal;
-			font-weight: bold;
-		}
-		
-		.form-control::-webkit-input-placeholder { font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-			color: rgba(119, 86, 31, 0.8);
-			font-style: normal;  }  /* WebKit, Blink, Edge */
-		.form-control:-moz-placeholder { font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-			color: rgba(119, 86, 31, 0.8);
-			font-style: normal; }  /* Mozilla Firefox 4 to 18 */
-		.form-control::-moz-placeholder { font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-			color: rgba(119, 86, 31, 0.8);
-			font-style: normal; }  /* Mozilla Firefox 19+ */
-		.form-control:-ms-input-placeholder { font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-			color: rgba(119, 86, 31, 0.8);
-			font-style: normal; }  /* Internet Explorer 10-11 */
-		.form-control::-ms-input-placeholder { font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-			color: rgba(119, 86, 31, 0.8);
-			font-style: normal; }  /* Microsoft Edge */
-		.erro-login {
-			color: rgba(250, 10, 1, 0.6);
-			font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-			text-align: center;
-			font-weight: bold;
-		}
-		
-		.registrarLinkContainer {
-			text-align: center;
-		}
-		
-		.registrarLink {
-			font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-			color: rgba(119, 86, 31, 0.8);
-		}
-		
-		.registrarLink:hover {
-			color: rgba(150, 105, 29, 0.8);
-		}
+body {
+	background-image: url("../horacerta-1.jpg");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	/*background-size:1450px;*/
+}
 
-		option {
-			color: rgba(119, 86, 31, 0.8);
-			font-style: normal;  
-		}
+@media screen and (max-width: 1024px) {
+	.form-control {
+		padding: 12px 12px 12px 12px;
+		font-size: 20px;
+	}
+	.registrarLink, .font-login {
+		font-size: 20px;
+	}
+}
 
-		#cargoSelect {
-			color: rgba(119, 86, 31, 0.8);
-			font-style: normal;  
-		}
-		
-	 </style>
+.card {
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.card {
+	background: rgba(255, 255, 255, 0.6);
+}
+
+.card-img-top {
+	opacity: 0.5;
+}
+
+.input, .input:focus {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+.form-control:focus {
+	border-color: rgba(119, 86, 31, 0.6);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
+		rgba(119, 86, 31, 0.6);
+}
+
+.btn {
+	background-color: rgba(119, 86, 31, 0.6);
+	border-color: rgba(119, 86, 31, 0.6);
+}
+
+.btn:hover {
+	background-color: rgba(119, 87, 31, 0.8);
+	border-color: rgba(119, 86, 31, 0.6);
+}
+
+.btn:disabled {
+	background-color: rgba(154, 120, 59, 0.8);
+	border-color: rgba(154, 120, 59, 0.8);
+}
+
+.font-login {
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	color: rgba(119, 86, 31, 0.8);
+	font-style: normal;
+	font-weight: bold;
+}
+
+.form-control::-webkit-input-placeholder {
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	color: rgba(119, 86, 31, 0.8);
+	font-style: normal;
+} /* WebKit, Blink, Edge */
+.form-control:-moz-placeholder {
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	color: rgba(119, 86, 31, 0.8);
+	font-style: normal;
+} /* Mozilla Firefox 4 to 18 */
+.form-control::-moz-placeholder {
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	color: rgba(119, 86, 31, 0.8);
+	font-style: normal;
+} /* Mozilla Firefox 19+ */
+.form-control:-ms-input-placeholder {
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	color: rgba(119, 86, 31, 0.8);
+	font-style: normal;
+} /* Internet Explorer 10-11 */
+.form-control::-ms-input-placeholder {
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	color: rgba(119, 86, 31, 0.8);
+	font-style: normal;
+} /* Microsoft Edge */
+.erro-login {
+	color: rgba(250, 10, 1, 0.6);
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	text-align: center;
+	font-weight: bold;
+}
+
+.registrarLinkContainer {
+	text-align: center;
+}
+
+.registrarLink {
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	color: rgba(119, 86, 31, 0.8);
+}
+
+.registrarLink:hover {
+	color: rgba(150, 105, 29, 0.8);
+}
+
+option {
+	color: rgba(119, 86, 31, 0.8);
+	font-style: normal;
+}
+
+#cargoSelect {
+	color: rgba(119, 86, 31, 0.8);
+	font-style: normal;
+}
+</style>
 </head>
 
 <body>
 
 	<div class="container">
 		<div class="row align-items-center h-100" id="desktopLogin">
-			<div class="card col-xl-4 offset-xl-0 col-lg-8 offset-lg-2">
-				<img class="card-img-top" src="../horacerta-1.png" style="opacity: 0.4">
-				<div class="erro-login" style="display: none" id="erroLogin">Usuário ou senha incorretos!</div>
-				<div class="erro-login" style="display:none" id="erroCad"></div>
+			<div
+				class="card col-xl-4 offset-xl-0 col-lg-8 offset-lg-2 col-lg-6 offset-lg-2">
+				<img class="img-fluid" src="../horacerta-1.png" style="opacity: 0.4">
+				<div class="erro-login" style="display: none" id="erroLogin">Usuário
+					ou senha incorretos!</div>
+				<div class="erro-login" style="display: none" id="erroCad"></div>
 				<div class="card-body">
 					<form action="/login/autenticar" method="post" id="formLogin">
 						<div class="form-group">
-							<input type="text" class="form-control input" id="username" name="username" placeholder="Email" />
+							<input type="text" class="form-control input" id="username"
+								name="username" placeholder="Email" />
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control input" id="password" name="password" placeholder="Senha" />
+							<input type="password" class="form-control input" id="password"
+								name="password" placeholder="Senha" />
 						</div>
 						<div class="form-group">
-							<input type="checkbox" name="remember-me" id="remember-me" />
-							<label for="remember-me" class="font-login">Continuar conectado</label>
+							<input type="checkbox" name="remember-me" id="remember-me" /> <label
+								for="remember-me" class="font-login">Continuar conectado</label>
 						</div>
 						<div class="form-group">
 							<button type="submit" class="btn btn-primary form-control">Entrar</button>
 						</div>
 						<div class="registrarLinkContainer">
-							<a href="javascript:renderizarFormRegistro();" class="registrarLink">Não possuo uma conta</a>
+							<a href="javascript:renderizarFormRegistro();"
+								class="registrarLink">Não possuo uma conta</a>
 						</div>
 					</form>
-					<form style="display: none;" id="formRegistro" action="/login/registrar" method="post">
+					<form style="display: none;" id="formRegistro"
+						action="/login/registrar" method="post">
 						<div class="form-group">
-							<input type="text" class="form-control input" id="cadUsername" name="cadUsername" placeholder="Email" required
-							 onfocusout="checkIfUserExists()" />
+							<input type="text" class="form-control input" id="cadUsername"
+								name="cadUsername" placeholder="Email" required
+								onfocusout="checkIfUserExists()" />
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control input" id="cadNome" name="cadNome" placeholder="Nome" required />
+							<input type="text" class="form-control input" id="cadNome"
+								name="cadNome" placeholder="Nome" required />
 						</div>
 
 						<!-- <div class="form-group">
@@ -143,25 +189,36 @@
 						</div> -->
 
 						<div class="form-group">
-							<select class="form-control input" id="cargoSelect" name="cadCargo"></select>
+							<select class="form-control input" id="cargoSelect"
+								name="cadCargo"></select>
 						</div>
 
 						<div class="form-group">
-							<input type="password" class="form-control input" id="cadPassword" name="cadPassword" placeholder="Senha"
-							 onkeyup="check()" required />
+							<input type="text" class="form-control input" id="cadTelefone"
+								name="cadTelefone"  placeholder="Telefone" required />
+						</div>
+
+						<div class="form-group">
+							<input type="password" class="form-control input"
+								id="cadPassword" name="cadPassword" placeholder="Senha"
+								onkeyup="check()" required />
 						</div>
 						<div class="form-group">
-							<div class="erro-login" style="display: none" id="erroSenha">As senhas devem ser iguais!</div>
+							<div class="erro-login" style="display: none" id="erroSenha">As
+								senhas devem ser iguais!</div>
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control input" id="confirmarPassword" name="confimarPassword" placeholder="Confirmar Senha"
-							 onkeyup="check()" />
+							<input type="password" class="form-control input"
+								id="confirmarPassword" name="confimarPassword"
+								placeholder="Confirmar Senha" onkeyup="check()" />
 						</div>
 						<div class="form-group">
-							<button type="submit" class="btn btn-primary form-control" id="cadButton">Cadastrar</button>
+							<button type="submit" class="btn btn-primary form-control"
+								id="cadButton">Cadastrar</button>
 						</div>
 						<div class="registrarLinkContainer">
-							<a href="javascript:renderizarFormLogin();" class="registrarLink">Já possuo uma conta</a>
+							<a href="javascript:renderizarFormLogin();" class="registrarLink">Já
+								possuo uma conta</a>
 						</div>
 					</form>
 				</div>
@@ -170,19 +227,25 @@
 	</div>
 
 
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-	 crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-	 crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-	 crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/imask"></script>
 	<script>
 		function getParameterByName(name, url) {
 			if (!url)
 				url = window.location.href;
 			name = name.replace(/[\[\]]/g, '\\$&');
 			var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'), results = regex
-				.exec(url);
+					.exec(url);
 			if (!results)
 				return null;
 			if (!results[2])
@@ -200,7 +263,8 @@
 			}
 
 			if (erroCad != null) {
-				document.getElementById('erroCad').innerHTML = 'Usuário ' + erroCad + ' já está em uso!';
+				document.getElementById('erroCad').innerHTML = 'Usuário '
+						+ erroCad + ' já está em uso!';
 				document.getElementById('erroCad').style.display = 'block';
 				renderizarFormRegistro();
 			}
@@ -227,13 +291,13 @@
 		}
 
 		function check() {
-			if (document.getElementById("cadPassword").value != document.getElementById("confirmarPassword").value) {
+			if (document.getElementById("cadPassword").value != document
+					.getElementById("confirmarPassword").value) {
 				document.getElementById("cadPassword").style.border = "1px solid red";
 				document.getElementById("confirmarPassword").style.border = "1px solid red";
 				document.getElementById("erroSenha").style.display = "block";
 				document.getElementById("cadButton").disabled = true;
-			}
-			else {
+			} else {
 				document.getElementById("cadPassword").style.border = "rgba(119, 86, 31, 0.6)";
 				document.getElementById("confirmarPassword").style.border = "rgba(119, 86, 31, 0.6)";
 				document.getElementById("erroSenha").style.display = "none"
@@ -244,30 +308,72 @@
 		function checkIfUserExists() {
 			if (document.getElementById("cadUsername").value.length > 0) {
 				var xhttp = new XMLHttpRequest();
-				xhttp.onreadystatechange = function () {
+				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
 						if (this.responseText == "true") {
 							document.getElementById("cadUsername").style.border = "1px solid red";
-							document.getElementById("erroCad").innerHTML = "Usuário " + document.getElementById("cadUsername").value + " já está em uso!";
+							document.getElementById("erroCad").innerHTML = "Usuário "
+									+ document.getElementById("cadUsername").value
+									+ " já está em uso!";
 							document.getElementById("erroCad").style.display = "block";
 							document.getElementById("cadButton").disabled = true;
-						}
-						else {
+						} else {
 							document.getElementById("cadUsername").style.border = "rgba(119, 86, 31, 0.6)";
 							document.getElementById("erroCad").style.display = "none";
 							document.getElementById("cadButton").disabled = false;
 						}
 					}
 				}
-				xhttp.open("GET", "/login/registrar?username=" + document.getElementById("cadUsername").value, true);
+				xhttp.open("GET", "/login/registrar?username="
+						+ document.getElementById("cadUsername").value, true);
 				xhttp.send();
 			}
 
 		}
 
+		document.getElementById('username').addEventListener(
+				'input',
+				function(event) {
+					var target = event.target;
+
+					var str = target.value.charAt(0).toLowerCase()
+							+ target.value.slice(1);
+
+					target.value = str.trim();
+				})
+
 		checkParametros();
 
-		var cargoEnum = { "Analista de Implantação": 1, "Programador": 2, "Consultor de Suporte": 3, "Assistente de Treinamento": 4, "Analista de Infraestrutura": 5, "Analista Fiscal": 6, "Diretor de Ofertas": 7, "Supervisor de Suporte": 8, "Consultor de Implantação": 9, "Consultor de Suporte DBA": 10, "Assistente Comercial": 11, "Analista de Negócios": 12, "Gestor P&D": 13, "Gestor de Implantação WMS": 14, "Gestor de Negócios": 15, "Gestora de RH": 16, "Gerente Comercial": 17, "Design Gráfico": 18, "Supervisor de Treinamento": 19, "Gestora Administrativa": 20, "Gestor de Desenvolvimento": 21, "Estagiário de Desenvolvimento": 22, "Auxiliar Administrativo": 23, "Gestor de Infraestrutura": 24, "Gestor de Implantação": 25, "Auxiliar de Serviços Gerais": 26, "Gestora de Suporte": 27, "Gestor de Manutenção": 28 }
+		var cargoEnum = {
+			"Analista de Implantação" : 1,
+			"Programador" : 2,
+			"Consultor de Suporte" : 3,
+			"Assistente de Treinamento" : 4,
+			"Analista de Infraestrutura" : 5,
+			"Analista Fiscal" : 6,
+			"Diretor de Ofertas" : 7,
+			"Supervisor de Suporte" : 8,
+			"Consultor de Implantação" : 9,
+			"Consultor de Suporte DBA" : 10,
+			"Assistente Comercial" : 11,
+			"Analista de Negócios" : 12,
+			"Gestor P&D" : 13,
+			"Gestor de Implantação WMS" : 14,
+			"Gestor de Negócios" : 15,
+			"Gestora de RH" : 16,
+			"Gerente Comercial" : 17,
+			"Design Gráfico" : 18,
+			"Supervisor de Treinamento" : 19,
+			"Gestora Administrativa" : 20,
+			"Gestor de Desenvolvimento" : 21,
+			"Estagiário de Desenvolvimento" : 22,
+			"Auxiliar Administrativo" : 23,
+			"Gestor de Infraestrutura" : 24,
+			"Gestor de Implantação" : 25,
+			"Auxiliar de Serviços Gerais" : 26,
+			"Gestora de Suporte" : 27,
+			"Gestor de Manutenção" : 28
+		}
 		Object.freeze(cargoEnum);
 
 		function populateCargoSelect(cargoEnum) {
@@ -276,23 +382,18 @@
 			var option = document.createElement("OPTION");
 			element.innerHTML = "";
 
-			for (var cargo in cargoEnum) {
-				element.innerHTML = element.innerHTML + "<option>" + cargo + "</option>";
+			for ( var cargo in cargoEnum) {
+				element.innerHTML = element.innerHTML + "<option>" + cargo
+						+ "</option>";
 			}
 
 		}
 
-		function detectmob() {
-			if (window.innerWidth <= 800 && window.innerHeight <= 600) {
-				document.getElementById('mobileLogin').style.display = 'block';
-			} else {
-				document.getElementById('desktopLogin').style.display = 'block';
-			}
-		}
+		var phoneMask = new IMask(document.getElementById("cadTelefone"), {
+			mask : '(00)00000-0000'
+		});
 
-		// detectmob();
 		populateCargoSelect(cargoEnum);
-
 	</script>
 </body>
 

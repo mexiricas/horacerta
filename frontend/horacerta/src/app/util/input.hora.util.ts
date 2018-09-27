@@ -62,14 +62,23 @@ export class InputHora {
         var min;
 
         if (separator == null || separator == '') {
+            for (let index = 0; index < str.length; index++) {
+                if(isNaN(str[index])) return false;
+            }
             hora = parseInt(str[0] + str[1]);
             min = parseInt(str[2] + str[3]);
         }
         else {
+            for (let index1 = 0; index1 < str.length; index1++) {
+                for (let index2 = 0; index2 < str[index1].length; index2++) {
+                    if(isNaN(str[index1][index2])) return false;
+                }
+            }
             hora = parseInt(str[0]);
             min = parseInt(str[1]);
         }
 
+        // console.log(str);
         if (hora > 23 || min > 59) {
             return false;
         }

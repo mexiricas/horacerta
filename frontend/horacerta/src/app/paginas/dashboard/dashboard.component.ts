@@ -6,6 +6,7 @@ import { LIMITE_MINIMO_TAMANHO_HORA } from './../../app.api';
 import { DatePipe } from '@angular/common';
 import { AlertCreator } from '../../util/alert.util';
 import { InputHora } from '../../util/input.hora.util';
+import { parse } from 'url';
 
 @Component({
   selector: 'hr-dashboard',
@@ -72,9 +73,10 @@ export class DashboardComponent implements OnInit {
   }
 
   salvarPonto(ponto: any) {
-    this.pontoService.salvarPonto(ponto).subscribe(() => {
+    this.pontoService.salvarPonto(ponto).subscribe((data) => {
       this.disablePontoButton = false;
-      this.alertCreator.criarAlert('sucessoRegistroPonto', 'alertContainer');
+      if(data) this.alertCreator.criarAlert('sucessoRegistroPonto', 'alertContainer');
+      else this.alertCreator.criarAlert('erroRegistroPonto', 'alertContainer');
       this.existeRegistroDia();
     });
   }
@@ -85,7 +87,7 @@ export class DashboardComponent implements OnInit {
     this.pontoService.consultarPonto(this.parametros).subscribe((p: any) => {
 
       if (p) {
-
+        // console.log(p);
         var datePipe = new DatePipe('pt-BR');
 
         for (var pAtributo in p) {
@@ -105,10 +107,12 @@ export class DashboardComponent implements OnInit {
         this.parametros = JSON.parse(JSON.stringify(p));
       }
       else {
+        this.disablePontoButton = false;
         this.pontoDaVez = 'entrada';
       }
     });
   }
+
 
   registrarPonto() {
 

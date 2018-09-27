@@ -50,6 +50,8 @@ public class AuthController {
 		usuario.setAuthorities(authorities);
 
 		Pessoa pessoa = new Pessoa();
+		
+		pessoa.setTelefone(formParam.get("cadTelefone").replaceAll("\\D" , ""));
 		pessoa.setCargo(formParam.get("cadCargo"));
 		pessoa.setNome(formParam.get("cadNome"));
 		pessoa.setUsername(formParam.get("cadUsername"));
