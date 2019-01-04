@@ -7,6 +7,7 @@ import io.horacerta.model.PontoDiario;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface PontoDao extends CrudRepository<PontoDiario, Long>{
@@ -17,7 +18,8 @@ public interface PontoDao extends CrudRepository<PontoDiario, Long>{
 
    List<PontoDiario> findByPessoaOrderByDataRegistroDesc(Pessoa pessoa);
    
-   public List<PontoDiario> findByDataRegistroBetween(Date dataInicial, Date dataFinal);
+   @Query(value = "select p from PontoDiario p where p.pessoa = ?1 and p.dataRegistro between ?2 and ?3")
+   public List<PontoDiario> findByRegistroPeriodo(Object pessoa, Object dataInicial, Object dataFinal);
    
 	
 }

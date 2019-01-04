@@ -14,54 +14,51 @@
   </section>
 
   <section class="content" style="font-size: 13px">
-    <!-- <div class="box box-default collapsed-box">
-      <div class="box-header with-border">
-        <h3 class="box-title">Filtro de Horas</h3>
-
-        <div class="box-tools pull-right">
-          <button type="button" class="btn btn-box-tool" data-widget="collapse">
-            <i class="fa fa-plus"></i>
-          </button>
+    <div class="box box-default collapsed-box">
+      <div class="box box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">Filtro de Horas</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="box-body">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <div class="col-md-3 col-sm-6">
-                <label>Data inicial</label>
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="date" class="form-control pull-right">
-                </div>
-              </div>
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
               <div class="form-group">
                 <div class="col-md-3 col-sm-6">
-                  <label>Data final</label>
+                  <label>Data inicial</label>
                   <div class="input-group date">
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="date" class="form-control pull-right">
+                    <input type="date" class="form-control pull-right" [(ngModel)]="parametros.dataIni">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-3 col-sm-6">
+                    <label>Data final</label>
+                    <div class="input-group date">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="date" class="form-control pull-right" [(ngModel)]="parametros.dataFim">
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="box-footer">
-        <div style="float: right">
-          <button type="button" (click)="pesquisarVendas()" class="btn btn-primary" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Aguarde...">Consultar</button>
-        </div>
-        <div style="float: right">
-          <button type="button" *ngIf="habilitarBotao" (click)="reenviarVendas()" class="btn btn-primary"
-            data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Aguarde...">Reenviar</button>
+        <div class="box-footer">
+          <div style="float: right">
+            <button type="button" (click)="pesquisarHistorico()" class="btn btn-primary" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Aguarde...">Consultar</button>
+          </div>
         </div>
       </div>
-    </div> -->
+    </div>
     <div class="row">
       <div class="col-xs-12">
         <div class="box">
@@ -110,17 +107,18 @@
                   <tbody>
                     <tr *ngFor="let h of popularTabela(registros)">
                       <td class="text-center">{{ h.dataRegistro | date:'dd/MM/yyyy' }}</td>
-                      <td class="text-center" [class.horaFaltando]="!h.entrada">{{ h.entrada | date:'HH:mm' }}</td>
-                      <td class="text-center" [class.horaFaltando]="!h.pausaini">{{ h.pausaini | date:'HH:mm'}}</td>
-                      <td class="text-center" [class.horaFaltando]="!h.pausafim">{{ h.pausafim | date:'HH:mm' }}</td>
-                      <td class="text-center" [class.horaFaltando]="!h.saida">{{ h.saida | date:'HH:mm' }}</td>
+                      <td class="text-center">{{ h.entrada | date:'HH:mm' }}</td>
+                      <td class="text-center">{{ h.pausaini | date:'HH:mm'}}</td>
+                      <td class="text-center">{{ h.pausafim | date:'HH:mm' }}</td>
+                      <td class="text-center">{{ h.saida | date:'HH:mm' }}</td>
                       <td class="text-center">{{ h.saldo | saldo }}</td>
                       <td style="text-align: center">
                         <a data-toggle="modal" data-target="#modal-default" (click)="setPontoAtual(h)"><i class="fa fa-fw fa-edit"></i></a>
                       </td>
                     </tr>
                     <tr class="odd" *ngIf="totalRegistro < 1">
-                      <td valign="top" colspan="24" class="dataTables_empty" style="text-align: center">Nenhum registro
+                      <td valign="top" colspan="24" class="dataTables_empty" style="text-align: center">Nenhum
+                        registro
                         correspondente encontrado
                       </td>
                     </tr>
@@ -136,16 +134,6 @@
               <label>Saldo Total: {{ saldoTotal | saldo }}
               </label>
               <div id="alertContainer"></div>
-
-              <div class="row justify-content-end">
-                <div class="col-lg-1 col-lg-offset-11" style="padding-bottom: 10px;">
-                  <button title="Adicionar Perfil" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-                    data-toggle="modal" data-target="#adicionarPonto" (click)="setNovoPonto()">
-                    <i class="material-icons">add</i>
-                  </button>
-                </div>
-              </div>
-
             </div>
           </div>
         </div>
@@ -204,70 +192,6 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
             <button type="button" (click)="salvarPonto(pontoAtual)" class="btn btn-primary" id="salvarPontoButton"
-              data-dismiss="modal">Salvar</button>
-          </div>
-        </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-    </div>
-
-    <!-- inicio-modal-content -->
-    <div class="modal fade" id="adicionarPonto" style="display: none;">
-      <div class="modal-dialog" style="width:45%;">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title">Alterar Registros</h4>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-sm-4">
-                <div style="text-align:center">
-                  <input type="text" class="inputData" specialCharacters="['/']" [patterns]="customPatterns" mask="00/00/0000"
-                    [ngModel]="novoPonto.dataRegistro || '--/--/----'" (ngModelChange)="novoPonto.dataRegistro = $event" />
-                  <p>Data</p>
-                </div>
-              </div>
-
-              <div class="col-sm-2">
-                <div style="text-align: center">
-                  <input type="text" class="inputHora" specialCharacters="[':']" [patterns]="customPatterns" mask="00:00"
-                    [ngModel]="novoPonto.entrada || '--:--'" (ngModelChange)="novoPonto.entrada = $event" [minlength]="tamMinimo" />
-                  <p>Entrada</p>
-                </div>
-              </div>
-
-              <div class="col-sm-2">
-                <div style="text-align: center">
-                  <input type="text" class="inputHora" specialCharacters="['-']" [patterns]="customPatterns" mask="00:00"
-                    [ngModel]="novoPonto.pausaini || '--:--'" (ngModelChange)="novoPonto.pausaini = $event" [minlength]="tamMinimo" />
-                  <p>Pausa</p>
-                </div>
-              </div>
-
-              <div class="col-sm-2">
-                <div style="text-align: center">
-                  <input type="text" class="inputHora" specialCharacters="['-']" [patterns]="customPatterns" mask="00:00"
-                    [ngModel]="novoPonto.pausafim || '--:--'" (ngModelChange)="novoPonto.pausafim = $event" [minlength]="tamMinimo" />
-                  <p>Retorno</p>
-                </div>
-              </div>
-
-              <div class="col-sm-2">
-                <div style="text-align: center">
-                  <input type="text" class="inputHora" specialCharacters="['-']" [patterns]="customPatterns" mask="00:00"
-                    [ngModel]="novoPonto.saida || '--:--'" (ngModelChange)="novoPonto.saida = $event" [minlength]="tamMinimo" />
-                  <p>Saída</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
-            <button type="button" (click)="salvarNovoPonto(novoPonto)" class="btn btn-primary" id="salvarNovoPontoButton"
               data-dismiss="modal">Salvar</button>
           </div>
         </div>

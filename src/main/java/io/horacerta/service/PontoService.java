@@ -17,9 +17,9 @@ public class PontoService {
 	private PontoDao pontoDao;
 
 
-	public List<PontoDiario> listar(Date dataInicial, Date dataFinal){
-		return pontoDao.findByDataRegistroBetween(dataInicial, dataFinal);
-	}
+//	public List<PontoDiario> listar(Date dataInicial, Date dataFinal){
+//		return pontoDao.findByDataRegistroBetween(dataInicial, dataFinal);
+//	}
 
 	public List<PontoDiario> listar(){
 		return (List<PontoDiario>) pontoDao.findAll();

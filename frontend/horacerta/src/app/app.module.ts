@@ -18,6 +18,7 @@ import { PaginarComponent } from './componentes/paginar/paginar.component';
 import { NomeUsuarioPipe } from './pipes/nome-usuario.pipe';
 import { registerLocaleData } from '@angular/common';
 import { SaldoPipe } from './pipes/saldo.pipe';
+import { RodapeComponent } from './layout-admin-lte/rodape/rodape.component';
 
 registerLocaleData(localePt, 'pt');
 
@@ -33,6 +34,7 @@ registerLocaleData(localePt, 'pt');
     PaginarComponent,
     NomeUsuarioPipe,
     SaldoPipe,
+    RodapeComponent,
   ],
   imports: [
     BrowserModule,

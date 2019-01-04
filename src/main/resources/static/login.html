@@ -167,17 +167,40 @@ option {
 						<div class="form-group">
 							<button type="submit" class="btn btn-primary form-control">Entrar</button>
 						</div>
-						<div class="registrarLinkContainer">
-							<a href="javascript:renderizarFormRegistro();"
-								class="registrarLink">Não possuo uma conta</a>
+						<div class="col-xl-12">
+							<div class="registrarLinkContainer" style="float: left; font-size: 13px;">
+								<a href="javascript:renderizarFormNovaSenha();"
+									class="registrarLink">Não sei minha senha</a>
+							</div>
+							
+							<div class="registrarLinkContainer" style="float: right; font-size: 13px;">
+								<a href="javascript:renderizarFormRegistro();"
+									class="registrarLink">Não possuo uma conta</a>
+							</div>
 						</div>
 					</form>
+					
+					<form style="display: none;" action="/login/novasenha" id="formNovaSenha" method="post">
+					<div class="form-group">
+							<input type="text" class="form-control input" id="usernameNovaSenha"
+								name="username" placeholder="Email" required
+								onfocusout="checkIfUserExists(checkUserNovaSenha, 'usernameNovaSenha')"/>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary form-control" id="novaSenhaButton" disabled>Recuperar Senha</button>
+						</div>
+						<div class="registrarLinkContainer">
+							<a href="javascript:renderizarFormLogin();" class="registrarLink">Já
+								possuo uma conta</a>
+						</div>
+					</form>
+					
 					<form style="display: none;" id="formRegistro"
 						action="/login/registrar" method="post">
 						<div class="form-group">
 							<input type="text" class="form-control input" id="cadUsername"
 								name="cadUsername" placeholder="Email" required
-								onfocusout="checkIfUserExists()" />
+								onfocusout="checkIfUserExists(checkUserCad, 'cadUsername')" />
 						</div>
 						<div class="form-group">
 							<input type="text" class="form-control input" id="cadNome"
@@ -273,11 +296,21 @@ option {
 
 		function renderizarFormRegistro() {
 			document.getElementById('formLogin').style.display = 'none';
+			document.getElementById('formNovaSenha').style.display = 'none';
 			document.getElementById('formRegistro').style.display = 'block';
+		}
+		
+		function renderizarFormNovaSenha() {
+			document.getElementById('formLogin').style.display = 'none';
+			document.getElementById('formRegistro').style.display = 'none';
+			document.getElementById('formNovaSenha').style.display = 'block';
+			
+			document.getElementById("cadUsername").style.border = "rgba(119, 86, 31, 0.6)";
 		}
 
 		function renderizarFormLogin() {
 			document.getElementById('formRegistro').style.display = 'none';
+			document.getElementById('formNovaSenha').style.display = 'none';
 			document.getElementById('formLogin').style.display = 'block';
 			document.getElementById('erroCad').style.display = 'none';
 			document.getElementById('formRegistro').reset();
@@ -305,30 +338,53 @@ option {
 			}
 		}
 
-		function checkIfUserExists() {
-			if (document.getElementById("cadUsername").value.length > 0) {
+		function checkIfUserExists(callback, inputId) {
+			if (document.getElementById(inputId).value.length > 0) {
 				var xhttp = new XMLHttpRequest();
-				xhttp.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200) {
-						if (this.responseText == "true") {
-							document.getElementById("cadUsername").style.border = "1px solid red";
-							document.getElementById("erroCad").innerHTML = "Usuário "
-									+ document.getElementById("cadUsername").value
-									+ " já está em uso!";
-							document.getElementById("erroCad").style.display = "block";
-							document.getElementById("cadButton").disabled = true;
-						} else {
-							document.getElementById("cadUsername").style.border = "rgba(119, 86, 31, 0.6)";
-							document.getElementById("erroCad").style.display = "none";
-							document.getElementById("cadButton").disabled = false;
-						}
-					}
-				}
+				xhttp.onreadystatechange = callback;
 				xhttp.open("GET", "/login/registrar?username="
-						+ document.getElementById("cadUsername").value, true);
+						+ document.getElementById(inputId).value, true);
 				xhttp.send();
 			}
 
+		}
+		
+		
+		function checkUserCad() {
+			
+				if (this.readyState == 4 && this.status == 200) {
+					if (this.responseText == "true") {
+						document.getElementById("cadUsername").style.border = "1px solid red";
+						document.getElementById("erroCad").innerHTML = "Usuário "
+								+ document.getElementById("cadUsername").value
+								+ " já está em uso!";
+						document.getElementById("erroCad").style.display = "block";
+						document.getElementById("cadButton").disabled = true;
+					} else {
+						document.getElementById("cadUsername").style.border = "rgba(119, 86, 31, 0.6)";
+						document.getElementById("erroCad").style.display = "none";
+						document.getElementById("cadButton").disabled = false;
+					}
+				}
+			
+		}
+		
+		function checkUserNovaSenha() {
+			if (this.readyState == 4 && this.status == 200) {
+				if(this.responseText == "true") {
+					document.getElementById("novaSenhaButton").disabled = false;
+					document.getElementById("erroCad").style.display = "none";
+					document.getElementById("usernameNovaSenha").style.border = "rgba(119, 86, 31, 0.6)";
+				}
+				else {
+					document.getElementById("usernameNovaSenha").style.border = "1px solid red";
+					document.getElementById("erroCad").innerHTML = "Usuário "
+							+ document.getElementById("usernameNovaSenha").value
+							+ " não existe! ";
+					document.getElementById("erroCad").style.display = "block";
+					document.getElementById("novaSenhaButton").disabled = true;
+				}
+			}
 		}
 
 		document.getElementById('username').addEventListener(

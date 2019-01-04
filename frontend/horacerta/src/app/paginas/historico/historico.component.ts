@@ -1,4 +1,4 @@
-import { LIMITE_MINIMO_TAMANHO_HORA, LIMITE_MINIMO_TAMANHO_DATA } from './../../app.api';
+import { LIMITE_MINIMO_TAMANHO_HORA } from './../../app.api';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 
 import { PontoService } from '../../servicos/ponto.service';
@@ -6,37 +6,47 @@ import { PessoaService } from '../../servicos/pessoa.service';
 import { InputHora } from '../../util/input.hora.util';
 import { DatePipe } from '@angular/common';
 import { AlertCreator } from '../../util/alert.util';
-import { InputData } from '../../util/input.data.util';
-import { Ponto } from '../../model/ponto';
-import { Pessoa } from '../../model/pessoa';
-import { Mes } from '../../model/mes';
 
 
 @Component({
   selector: 'hr-historico',
   templateUrl: './historico.component.html',
   styleUrls: ['./historico.component.css'],
-  providers: [InputHora, AlertCreator, InputData]
+  providers: [InputHora, AlertCreator]
 })
 export class HistoricoComponent implements OnInit {
 
-  registros: Ponto[];
-  mesAtual: Mes;
+  registros: any = [];
   filtroHistorico: any = [];
   saldoTotal: number = 0;
 
-  parametros: Ponto;
+  parametros: any = {
+    id: null,
+    entrada: null,
+    pausaini: null,
+    pausafim: null,
+    saida: null,
+    dataRegistro: null,
+    dataIni: null,
+    dataFim: null,
+    pessoa: {}
+  }
 
-  pontoAtual: Ponto;
-
-  novoPonto: Ponto;
+  pontoAtual: any = {
+    id: null,
+    entrada: null,
+    pausaini: null,
+    pausafim: null,
+    saida: null,
+    dataRegistro: null,
+    pessoa: {}
+  }
 
   pagina: number = 0;
   qtdPorPagina: number = 10;
   qtdPaginas: number;
   totalRegistro;
   tamMinimo = LIMITE_MINIMO_TAMANHO_HORA;
-  tamMinimoData = LIMITE_MINIMO_TAMANHO_DATA;
 
   atributosPonto = ['entrada', 'pausaini', 'pausafim', 'saida'];
 
@@ -51,23 +61,27 @@ export class HistoricoComponent implements OnInit {
     private pontoService: PontoService,
     private pessoaService: PessoaService,
     private alertCreator: AlertCreator,
-    private horaUtil: InputHora,
-    private dataUtil: InputData) { }
+    private horaUtil: InputHora) { }
 
   ngOnInit() {
-    this.pessoaService.consultarPessoa().subscribe((pessoa:Pessoa) => {
-      console.log(pessoa);
+    this.pessoaService.consultarPessoa().subscribe(pessoa => {
       this.parametros.pessoa = pessoa;
       this.parametros.pessoa.id = this.pessoaService.idPessoa;
-      this.calculaMesAtual(this.mesAtual);
+      this.anoAtual();
       this.listar();
     });
   }
 
+  pesquisarHistorico() {
+    this.pontoService.consultarPontoPeriodo(this.parametros).subscribe(dados => {
+      this.registros = dados;
+      this.calculaSaldo();
+    });
+  }
+
   listar() {
-    this.pontoService.listar(this.parametros).subscribe((dados: any) => {
-      // console.log(dados);
-      this.registros = JSON.parse(JSON.stringify(dados));
+    this.pontoService.listar(this.parametros).subscribe(dados => {
+      this.registros = dados;
       this.calculaSaldo();
     });
   }
@@ -94,13 +108,13 @@ export class HistoricoComponent implements OnInit {
   }
 
 
-  calculaMesAtual(mes:Mes) {
+  anoAtual() {
     const date = new Date();
-    mes.ano = date.getFullYear();
+    this.parametros.ano = date.getFullYear();
     this.parametros.mes = (date.getMonth() + 1) % 13;
 
-    this.parametros.dataInicial = `${this.parametros.ano}${('0' + (date.getMonth() + 1)).substr(-2)}01`;
-    this.parametros.dataFinal = `${this.parametros.ano}${('0' + ((date.getMonth() + 2) % 13)).substr(-2)}01`;
+    this.parametros.dataIni = `${this.parametros.ano}-${('0' + (date.getMonth() + 1)).substr(-2)}-01`;
+    this.parametros.dataFim = `${this.parametros.ano}-${('0' + ((date.getMonth() + 2) % 13)).substr(-2)}-01`;
   }
 
   calculaSaldo() {
@@ -114,6 +128,7 @@ export class HistoricoComponent implements OnInit {
     this.horaUtil.setInputMask(document, 'salvarPontoButton')
 
     this.pontoAtual = JSON.parse(JSON.stringify(ponto));
+
     var datePipe = new DatePipe('pt-BR');
 
     for (var pAtributo in this.pontoAtual) {
@@ -124,16 +139,13 @@ export class HistoricoComponent implements OnInit {
 
       }
     }
-  }
 
-  setNovoPonto() {
-    this.horaUtil.setInputMask(document, 'salvarNovoPontoButton');
-    this.dataUtil.setInputMask(document, 'salvarNovoPontoButton');
-    this.resetNovoPonto();
   }
 
   salvarPonto(ponto: any) {
+
     var pontoToSave = JSON.parse(JSON.stringify(ponto));
+
     for (var pAtributo in pontoToSave) {
       if (this.atributosPonto.indexOf(pAtributo) > - 1) {
         if (pontoToSave[pAtributo]) {
@@ -141,45 +153,9 @@ export class HistoricoComponent implements OnInit {
         }
       }
     }
-
-    this.pontoService.salvarPonto(pontoToSave).subscribe((data) => {
-      console.log('dado: ' + data);
-      if(data) this.alertCreator.criarAlert('sucessoRegistroPonto', 'alertContainer');
-      else this.alertCreator.criarAlert('erroRegistroPonto', 'alertContainer');
+    this.pontoService.salvarPonto(pontoToSave).subscribe(() => {
+      this.alertCreator.criarAlert('sucessoRegistroPonto', 'alertContainer');
       this.listar();
     });
   }
-
-  resetNovoPonto() {
-    this.novoPonto = {
-      id: null,
-      entrada: null,
-      pausaini: null,
-      pausafim: null,
-      saida: null,
-      dataRegistro: null
-    }
-  }
-
-  salvarNovoPonto(ponto) {
-    ponto.pessoa = this.parametros.pessoa;
-    var pontoToSave = JSON.parse(JSON.stringify(ponto));
-
-    pontoToSave.dataRegistro = this.dataUtil.newDateFromDate(pontoToSave.dataRegistro);
-
-    for (var pAtributo in pontoToSave) {
-      if (this.atributosPonto.indexOf(pAtributo) > -1) {
-        if (pontoToSave[pAtributo]) {
-          pontoToSave[pAtributo] = this.horaUtil.newDateFromHoraMin(pontoToSave[pAtributo]);
-        }
-      }
-    }
-
-    this.pontoService.salvarPonto(pontoToSave).subscribe((data) => {
-      if(data) this.alertCreator.criarAlert('sucessoRegistroPonto', 'alertContainer');
-      else this.alertCreator.criarAlert('erroRegistroPonto', 'alertContainer');
-      this.listar();
-    })
-  }
 }
-
