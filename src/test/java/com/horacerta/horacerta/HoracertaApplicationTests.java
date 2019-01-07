@@ -10,7 +10,7 @@ public class HoracertaApplicationTests {
 	@Test
 	public void contextLoads() {
 	   
-	   String password = "Jose@2019";
+	   String password = "Cap@2019";
       BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
       String hashedPassword = passwordEncoder.encode(password);
 
