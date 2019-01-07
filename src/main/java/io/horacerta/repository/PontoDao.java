@@ -18,7 +18,7 @@ public interface PontoDao extends CrudRepository<PontoDiario, Long>{
 
    List<PontoDiario> findByPessoaOrderByDataRegistroDesc(Pessoa pessoa);
    
-   @Query(value = "select p from PontoDiario p where p.pessoa = ?1 and p.dataRegistro between ?2 and ?3")
+   @Query(value = "select p from PontoDiario p where p.pessoa = ?1 and p.dataRegistro between ?2 and ?3 order by p.dataRegistro desc")
    public List<PontoDiario> findByRegistroPeriodo(Object pessoa, Object dataInicial, Object dataFinal);
    
 	

@@ -83,8 +83,6 @@ public class AuthController {
       BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
       String hashedPassword = passwordEncoder.encode(password);
       
-      System.out.println(hashedPassword);
-      
       EnvioEmailService email = new EnvioEmailService();
       
       email.enviarEmail(username, "HoraCerta - Nova Senha", montarEmail(((CustomUserDetail) cud).getPessoa().getNome().split(" ")[0]));
