@@ -43,9 +43,7 @@ public class ConfiguracaoController {
          ((CustomUserDetail) cud).getUser().setUsername(pessoa.getUsername());
          userDetailService.criarUsuario(((CustomUserDetail) cud).getUser());
       }
-
       return pessoaDao.save(pessoa);
-
    }
 
    @RequestMapping(value = "/salvar/novasenha", method = RequestMethod.POST)
