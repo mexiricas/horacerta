@@ -1,0 +1,139 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Meu Perfil
+      <small>Informações Gerais</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li>
+        <a href="#">
+          <i class="fa fa-dashboard"></i> Home</a>
+      </li>
+      <li>
+        <a href="#">Configuração</a>
+      </li>
+      <li class="active">Editar Perfil</li>
+    </ol>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#perfil" data-toggle="tab">Perfil</a>
+            </li>
+            <li>
+              <a href="#senha" data-toggle="tab">Alterar Senha</a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="col-sm-12" *ngIf="!chave_msg">
+              <!-- <e-mensagem></e-mensagem> -->
+            </div>
+            <div class="active tab-pane" id="perfil">
+              <div class="form-horizontal">
+                <div>
+                  <small>Informações Gerais do Usuário</small>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputName" class="col-sm-2 control-label">Nome</label>
+
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" [(ngModel)]="pessoa.nome">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" [(ngModel)]="pessoa.username">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputCargo" class="col-sm-2 control-label">Cargo</label>
+
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" [(ngModel)]="pessoa.cargo">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputTel" class="col-sm-2 control-label">Tel.</label>
+
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="Nº Celular" [ngModel]="pessoa.telefone | eFone" (ngModelChange)="pessoa.telefone = $event" maxlength="15">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-1">
+                    <button class="btn btn-block btn-primary btn-sm" (click)="salvarPessoa()">Salvar</button>
+                  </div>
+                </div>
+                <!-- <div style="right: 8%; bottom: 20%; display: block; position: fixed; z-index: 100; border-radius: 50%; background-color: #3c8dbc">
+                  <button title="Adicionar Perfil" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" data-toggle="modal"
+                    data-target="#modal-default">
+                    <i class="material-icons">add</i>
+                  </button>
+                </div> -->
+              </div>
+            </div>
+
+            <div class="tab-pane" id="senha">
+              <div class="form-horizontal">
+                <div class="form-group">
+                  <div class="box-body">
+                    <div class="col-xs-12">
+                      <div class="form-group">
+                        <label for="inputEmail" class="col-sm-2 control-label">Senha Atual</label>
+                        <div class="col-sm-4">
+                          <div class="form-group has-feedback">
+                            <input type="password" class="form-control" [(ngModel)]="parametros.senhaAtual" placeholder="Senha Atual">
+                            <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="inputNovaSenha" class="col-sm-2 control-label">Nova Senha</label>
+                        <div class="col-sm-4">
+                          <div class="form-group has-feedback">
+                            <input type="password" class="form-control" [(ngModel)]="parametros.novaSenha" placeholder="Nova Senha">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="inputNovaSenha" class="col-sm-2 control-label">Confirmar Senha</label>
+                        <div class="col-sm-4">
+                          <div class="form-group has-feedback">
+                            <input type="password" class="form-control" [(ngModel)]="parametros.novaSenha_2" placeholder="Confirmar Senha">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-1">
+                          <button type="submit" class="btn btn-block btn-primary btn-sm" (click)="trocarSenha()" [disabled]="!(parametros.senhaAtual && parametros.novaSenha && parametros.novaSenha_2)">Confirmar</button>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

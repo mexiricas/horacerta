@@ -19,6 +19,8 @@ import { NomeUsuarioPipe } from './pipes/nome-usuario.pipe';
 import { registerLocaleData } from '@angular/common';
 import { SaldoPipe } from './pipes/saldo.pipe';
 import { RodapeComponent } from './layout-admin-lte/rodape/rodape.component';
+import { ConfiguracaoComponent } from './paginas/configuracao/configuracao.component';
+import { EFonePipe } from './pipes/e-fone.pipe';
 
 registerLocaleData(localePt, 'pt');
 
@@ -35,6 +37,8 @@ registerLocaleData(localePt, 'pt');
     NomeUsuarioPipe,
     SaldoPipe,
     RodapeComponent,
+    ConfiguracaoComponent,
+    EFonePipe
   ],
   imports: [
     BrowserModule,

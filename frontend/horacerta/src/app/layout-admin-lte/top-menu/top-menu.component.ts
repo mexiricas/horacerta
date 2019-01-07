@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PessoaService } from '../../servicos/pessoa.service';
+
+import { ConfiguracaoService } from './../../servicos/configuracao.service';
 
 @Component({
   selector: 'hr-top-menu',
@@ -10,15 +11,13 @@ export class TopMenuComponent implements OnInit {
 
   pessoa: any;
 
-  constructor(private pessoaService: PessoaService) {
-    this.pessoaService.consultarPessoa().subscribe((pessoa) => {
+  constructor(private configuracaoService: ConfiguracaoService) {
+    this.configuracaoService.consultarPessoa().subscribe((pessoa) => {
       this.pessoa = pessoa;
     });
-   }
-
-  ngOnInit() {
-   
   }
+
+  ngOnInit() { }
 
 
 }
