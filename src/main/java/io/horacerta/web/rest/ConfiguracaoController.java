@@ -3,12 +3,13 @@ package io.horacerta.web.rest;
 import io.horacerta.model.CustomUserDetail;
 import io.horacerta.model.Pessoa;
 import io.horacerta.repository.PessoaDao;
+import io.horacerta.repository.UserDao;
 import io.horacerta.service.UserDetailService;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,6 +29,9 @@ public class ConfiguracaoController {
 
    @Autowired
    private PessoaDao pessoaDao;
+
+   @Autowired
+   private UserDao userDao;
 
    @Autowired
    UserDetailService userDetailService;
@@ -62,5 +66,27 @@ public class ConfiguracaoController {
          return true;
       }
       return false;
+   }
+
+   @RequestMapping(value = "/salvar/imagem", method = RequestMethod.POST)
+   public boolean salvarImagem(@RequestBody HashMap<String, Object> parametros) throws FileNotFoundException {
+
+      byte[] bytes = ((String) parametros.get("imagem")).getBytes();
+
+      UserDetails cud = userDetailService.loadUserByUsername((String) parametros.get("username"));
+
+      ((CustomUserDetail) cud).getUser().setImagem(bytes);
+
+      userDetailService.criarUsuario(((CustomUserDetail) cud).getUser());
+      return true;
+   }
+
+   @RequestMapping(value = "/montar/imagem", method = RequestMethod.POST)
+   public HashMap<String, String> montarImagem(@RequestBody HashMap<String, Object> parametros) {
+      String base64 = new String(userDao.findByImage((String) parametros.get("username")));
+
+      HashMap<String, String> map = new HashMap<>();
+      map.put("base64", base64);
+      return map;
    }
 }
