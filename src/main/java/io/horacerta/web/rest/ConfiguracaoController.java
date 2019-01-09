@@ -83,10 +83,19 @@ public class ConfiguracaoController {
 
    @RequestMapping(value = "/montar/imagem", method = RequestMethod.POST)
    public HashMap<String, String> montarImagem(@RequestBody HashMap<String, Object> parametros) {
-      String base64 = new String(userDao.findByImage((String) parametros.get("username")));
+      byte[] bytes = (byte[]) userDao.findByImage((String) parametros.get("username"));
 
       HashMap<String, String> map = new HashMap<>();
-      map.put("base64", base64);
-      return map;
+
+      if (bytes != null) {
+         String base64 = new String(bytes);
+
+         map.put("base64", base64);
+         return map;
+      } else {
+         map.put("base00", null);
+         return map;
+      }
+
    }
 }
