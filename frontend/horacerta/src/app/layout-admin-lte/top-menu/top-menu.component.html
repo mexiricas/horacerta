@@ -21,13 +21,17 @@
       <ul class="nav navbar-nav">
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="../../assets/imagens/userAvatar.png" class="user-image" alt="User Image">
+            <img src="../../assets/imagens/userAvatar.png" *ngIf="!imagem" class="user-image" alt="User Image">
+            <img src={{imagem}} *ngIf="imagem" class="user-image" alt="User Image">
             <span class="hidden-xs">{{pessoa?.nome | nomeUsuario}}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
-              <img src="../../assets/imagens/userAvatar.png" class="img-circle" alt="User Image">
+              <img src="../../assets/imagens/userAvatar.png" *ngIf="!imagem" data-toggle="modal" data-target="#modal-top-menu" class="img-circle cursorShow"
+                alt="User Image">
+                <img src={{imagem}} *ngIf="imagem" data-toggle="modal" data-target="#modal-top-menu" class="img-circle cursorShow"
+                alt="User Image">
               <p>
                 {{pessoa?.nome | nomeUsuario}}
                 <small>{{pessoa?.cargo}}</small>
@@ -46,3 +50,52 @@
 
   </nav>
 </header>
+
+
+<!-- inicio-modal-content -->
+<div class="modal fade" id="modal-top-menu" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Selecionar foto do Perfil</h4>
+      </div>
+      <div class="modal-body">
+        <p>Fazer upload de fotos</p>
+        <div class="register-box-body">
+          <div class="form-group" style="opacity: 1; text-align: center" [hidden]="croppedImage">
+            <h4>Arraste uma foto do perfil para cá</h4>
+            <h5>-ou-</h5>
+          </div>
+          <input style="margin-left: auto; margin-right: auto;" type="file" (change)="fileChangeEvent($event)">
+            <div>
+                <image-cropper
+                    [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="true"
+                    [resizeToWidth]="128"
+                    [cropperMinWidth]="128"
+                    [onlyScaleDown]="true"
+                    [roundCropper]="false"
+                    format="png"
+                    outputType="base64"
+                    (imageCropped)="imageCropped($event)"
+                    (imageLoaded)="imageLoaded()"
+                    (loadImageFailed)="loadImageFailed()"
+                    style="max-width:30vh; max-height:30vh;"
+                    [style.display]="showCropper ? null : 'none'"
+                ></image-cropper>
+              </div>
+              <img [src]="croppedImage" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-top-menu pull-left" data-dismiss="modal">Fechar</button>
+        <button type="button" (click)="minhaImg()" data-dismiss="modal" class="btn btn-primary">Definir como foto de Perfil</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

@@ -21,6 +21,7 @@ import { SaldoPipe } from './pipes/saldo.pipe';
 import { RodapeComponent } from './layout-admin-lte/rodape/rodape.component';
 import { ConfiguracaoComponent } from './paginas/configuracao/configuracao.component';
 import { EFonePipe } from './pipes/e-fone.pipe';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 registerLocaleData(localePt, 'pt');
 
@@ -46,7 +47,8 @@ registerLocaleData(localePt, 'pt');
     FormsModule,
     routing,
     CookieModule.forRoot(),
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    ImageCropperModule
   ],
   providers: [PontoService, {provide: LOCALE_ID, useValue: 'pt-BR'}],
   bootstrap: [AppComponent]

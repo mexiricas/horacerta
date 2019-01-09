@@ -44,5 +44,13 @@ export class ConfiguracaoService {
   novaSenha(parametros) { 
     return this.http.post(`${HR_API}/configuracao/salvar/novasenha`, parametros);
   }
+
+  salvarImagem(parametros){
+    return this.http.post(`${HR_API}/configuracao/salvar/imagem`, parametros);
+  }
+
+  montarImagem(parametros){
+    return this.http.post(`${HR_API}/configuracao/montar/imagem`, parametros);
+  }
   
 }

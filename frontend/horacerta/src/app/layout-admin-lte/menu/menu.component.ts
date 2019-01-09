@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { PessoaService } from '../../servicos/pessoa.service';
+import { TopMenuComponent } from '../top-menu/top-menu.component';
 
 @Component({
   selector: 'hr-menu',
@@ -9,10 +11,14 @@ import { PessoaService } from '../../servicos/pessoa.service';
 export class MenuComponent implements OnInit {
 
   pessoa: any;
+  imagem: any;
 
   constructor(private pessoaService: PessoaService) {
     this.pessoaService.consultarPessoa().subscribe((pessoa) => {
       this.pessoa = pessoa;
+      TopMenuComponent.emitImagem.subscribe((i) => {
+        this.imagem = i;
+      });
     });
    }
 

@@ -26,7 +26,7 @@ export class ConfiguracaoComponent implements OnInit {
       this.pessoa = pessoa;
       this.pessoa.id = this.configuracaoService.getId();
       this.parametros.username = this.pessoa.username;
-      console.log(pessoa);
+      //console.log(pessoa);
     });
   }
 
