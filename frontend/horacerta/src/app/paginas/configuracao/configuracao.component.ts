@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { ConfiguracaoService } from './../../servicos/configuracao.service';
 import { MensagemService } from './../../componentes/mensagem/mensagem.service';
+import { EnumCargo } from './../../enum/cargo.enum';
+
 
 
 @Component({
@@ -12,7 +14,7 @@ import { MensagemService } from './../../componentes/mensagem/mensagem.service';
 export class ConfiguracaoComponent implements OnInit {
 
   pessoa: any = {};
-
+  cargos = Object.values(EnumCargo).slice(0, 29);
 
   parametros: any = {
     senhaAtual: null,
@@ -34,7 +36,11 @@ export class ConfiguracaoComponent implements OnInit {
   }
 
   salvarPessoa() {
-    this.configuracaoService.salvarPessoa(this.pessoa).subscribe(() => {});
+    this.configuracaoService.salvarPessoa(this.pessoa).subscribe((p) => {
+      if(p != null){
+        this.sucesso(`${this.pessoa.nome}, suas informações foram atualizadas com sucesso!`);
+      }
+    });
   }
 
   trocarSenha() {

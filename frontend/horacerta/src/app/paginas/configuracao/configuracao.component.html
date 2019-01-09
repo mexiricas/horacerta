@@ -30,7 +30,7 @@
           </ul>
 
           <div class="tab-content">
-            <div class="col-sm-12" *ngIf="!chave_msg">
+            <div class="col-sm-12">
               <hr-mensagem></hr-mensagem>
             </div>
             <div class="active tab-pane" id="perfil">
@@ -59,7 +59,9 @@
                   <label for="inputCargo" class="col-sm-2 control-label">Cargo</label>
 
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" [(ngModel)]="pessoa.cargo">
+                    <select type="text" class="form-control" [(ngModel)]="pessoa.cargo">
+                      <option value="{{ item }}" *ngFor="let item of cargos; index as i">{{ item }}</option>
+                    </select>
                   </div>
                 </div>
 

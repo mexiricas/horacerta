@@ -29,8 +29,6 @@ export class TopMenuComponent implements OnInit {
       this.configuracaoService.montarImagem({ username: this.username }).subscribe(i => {
         this.imagem = i["base64"];
         TopMenuComponent.emitImagem.emit(this.imagem);
-        // console.log(i["base64"]); 
-
       });
     });
   }
@@ -46,6 +44,7 @@ export class TopMenuComponent implements OnInit {
       TopMenuComponent.emitImagem.emit(this.imagem);
       this.imageChangedEvent = '';
       this.croppedImage = '';
+      this.showCropper = false;
     });
   }
 
