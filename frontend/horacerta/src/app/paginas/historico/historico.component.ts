@@ -4,6 +4,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { PontoService } from '../../servicos/ponto.service';
 import { PessoaService } from '../../servicos/pessoa.service';
 import { InputHora } from '../../util/input.hora.util';
+import { InputData } from '../../util/input.data.util';
 import { DatePipe } from '@angular/common';
 import { AlertCreator } from '../../util/alert.util';
 
@@ -12,7 +13,7 @@ import { AlertCreator } from '../../util/alert.util';
   selector: 'hr-historico',
   templateUrl: './historico.component.html',
   styleUrls: ['./historico.component.css'],
-  providers: [InputHora, AlertCreator]
+  providers: [InputHora, AlertCreator, InputData]
 })
 export class HistoricoComponent implements OnInit {
 
@@ -42,6 +43,15 @@ export class HistoricoComponent implements OnInit {
     pessoa: {}
   }
 
+  novoPonto = {
+    id: null,
+    entrada: null,
+    pausaini: null,
+    pausafim: null,
+    saida: null,
+    dataRegistro: null
+  }
+
   pagina: number = 0;
   qtdPorPagina: number = 10;
   qtdPaginas: number;
@@ -61,7 +71,8 @@ export class HistoricoComponent implements OnInit {
     private pontoService: PontoService,
     private pessoaService: PessoaService,
     private alertCreator: AlertCreator,
-    private horaUtil: InputHora) { }
+    private horaUtil: InputHora,
+    private dataUtil: InputData) { }
 
   ngOnInit() {
     this.pessoaService.consultarPessoa().subscribe(pessoa => {
@@ -122,6 +133,45 @@ export class HistoricoComponent implements OnInit {
     this.registros.forEach((element) => {
       this.saldoTotal += element.saldo;
     });
+  }
+
+  setNovoPonto() {
+    this.horaUtil.setInputMask(document, 'salvarNovoPontoButton');
+    this.dataUtil.setInputMask(document, 'salvarNovoPontoButton');
+    this.resetNovoPonto();
+  }
+
+  resetNovoPonto() {
+    this.novoPonto = {
+      id: null,
+      entrada: null,
+      pausaini: null,
+      pausafim: null,
+      saida: null,
+      dataRegistro: null
+    }
+  }
+
+  salvarNovoPonto(ponto) {
+    ponto.pessoa = this.parametros.pessoa;
+    var pontoToSave = JSON.parse(JSON.stringify(ponto));
+
+     pontoToSave.dataRegistro = this.dataUtil.newDateFromDate(pontoToSave.dataRegistro);
+
+     for (var pAtributo in pontoToSave) {
+      if (this.atributosPonto.indexOf(pAtributo) > -1) {
+        if (pontoToSave[pAtributo]) {
+          pontoToSave[pAtributo] = this.horaUtil.newDateFromHoraMin(pontoToSave[pAtributo]);
+        }
+      }
+    }
+
+    this.pontoService.salvarPonto(pontoToSave).subscribe((data) => {
+      if(data) this.alertCreator.criarAlert('sucessoRegistroPonto', 'alertContainer');
+      else this.alertCreator.criarAlert('erroRegistroPonto', 'alertContainer');
+      this.listar();
+    })
+    
   }
 
   setPontoAtual(ponto: any) {

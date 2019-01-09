@@ -135,23 +135,23 @@
               </label>
               <div id="alertContainer"></div>
 
-              <!-- <div class="row justify-content-end">
+              <div class="row justify-content-end">
                 <div class="col-lg-1 col-lg-offset-11" style="padding-bottom: 10px;">
                   <button title="Adicionar Perfil" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
                     data-toggle="modal" data-target="#adicionarPonto" (click)="setNovoPonto()">
                     <i class="material-icons">add</i>
                   </button>
                 </div>
-              </div> -->
+              </div>
 
-            
+
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- inicio-modal-content -->
-    <div class="modal fade" id="modal-default"  style="display: none;">
+    <div class="modal fade" id="modal-default" style="display: none;">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -203,6 +203,70 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
             <button type="button" (click)="salvarPonto(pontoAtual)" class="btn btn-primary" id="salvarPontoButton"
+              data-dismiss="modal">Salvar</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+
+    <!-- inicio-modal-content -->
+    <div class="modal fade" id="adicionarPonto" style="display: none;">
+      <div class="modal-dialog" style="width:45%;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">Alterar Registros</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <div style="text-align:center">
+                  <input type="text" class="inputData" specialCharacters="['/']" [patterns]="customPatterns" mask="00/00/0000"
+                    [ngModel]="novoPonto.dataRegistro || '--/--/----'" (ngModelChange)="novoPonto.dataRegistro = $event" />
+                  <p>Data</p>
+                </div>
+              </div>
+
+              <div class="col-sm-2">
+                <div style="text-align: center">
+                  <input type="text" class="inputHora" specialCharacters="[':']" [patterns]="customPatterns" mask="00:00"
+                    [ngModel]="novoPonto.entrada || '--:--'" (ngModelChange)="novoPonto.entrada = $event" [minlength]="tamMinimo" />
+                  <p>Entrada</p>
+                </div>
+              </div>
+
+              <div class="col-sm-2">
+                <div style="text-align: center">
+                  <input type="text" class="inputHora" specialCharacters="['-']" [patterns]="customPatterns" mask="00:00"
+                    [ngModel]="novoPonto.pausaini || '--:--'" (ngModelChange)="novoPonto.pausaini = $event" [minlength]="tamMinimo" />
+                  <p>Pausa</p>
+                </div>
+              </div>
+
+              <div class="col-sm-2">
+                <div style="text-align: center">
+                  <input type="text" class="inputHora" specialCharacters="['-']" [patterns]="customPatterns" mask="00:00"
+                    [ngModel]="novoPonto.pausafim || '--:--'" (ngModelChange)="novoPonto.pausafim = $event" [minlength]="tamMinimo" />
+                  <p>Retorno</p>
+                </div>
+              </div>
+
+              <div class="col-sm-2">
+                <div style="text-align: center">
+                  <input type="text" class="inputHora" specialCharacters="['-']" [patterns]="customPatterns" mask="00:00"
+                    [ngModel]="novoPonto.saida || '--:--'" (ngModelChange)="novoPonto.saida = $event" [minlength]="tamMinimo" />
+                  <p>Saída</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+            <button type="button" (click)="salvarNovoPonto(novoPonto)" class="btn btn-primary" id="salvarNovoPontoButton"
               data-dismiss="modal">Salvar</button>
           </div>
         </div>
