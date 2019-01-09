@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ConfiguracaoService } from './../../servicos/configuracao.service';
+import { MensagemService } from './../../componentes/mensagem/mensagem.service';
+
 
 @Component({
   selector: 'hr-configuracao',
@@ -19,37 +21,40 @@ export class ConfiguracaoComponent implements OnInit {
     username: null
   }
 
-  constructor(private configuracaoService: ConfiguracaoService) { }
+  constructor(
+    private configuracaoService: ConfiguracaoService,
+    private mensagemService: MensagemService) { }
 
   ngOnInit() {
     this.configuracaoService.consultarPessoa().subscribe((pessoa) => {
       this.pessoa = pessoa;
       this.pessoa.id = this.configuracaoService.getId();
       this.parametros.username = this.pessoa.username;
-      //console.log(pessoa);
     });
   }
 
   salvarPessoa() {
-    this.configuracaoService.salvarPessoa(this.pessoa).subscribe((p) => {
-      // this.pessoa = p;
-      console.log(p);
-      
-     });
+    this.configuracaoService.salvarPessoa(this.pessoa).subscribe(() => {});
   }
 
   trocarSenha() {
-    console.log(this.parametros);
-    
     this.configuracaoService.novaSenha(this.parametros).subscribe(retorno =>{
       if(retorno === true && this.parametros.novaSenha === this.parametros.novaSenha_2){
         this.parametros = {};
-        console.log("A sua senha foi alterada com sucesso!");
+        this.sucesso(`${this.pessoa.nome}, sua senha foi alterada com sucesso!`);
       }else{
-        console.log("Não foi possivel mudar a senha!");
-        
+        this.erro(`${this.pessoa.nome}, as senhas informadas não são iguais, certifique-se e tente novamente!`);
       }
     });
+  }
+
+  sucesso(message: string) {
+    this.mensagemService.sucesso(message);
+  }
+
+
+  erro(message: string) {
+    this.mensagemService.erro(message);
   }
 
 }

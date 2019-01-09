@@ -22,6 +22,8 @@ import { RodapeComponent } from './layout-admin-lte/rodape/rodape.component';
 import { ConfiguracaoComponent } from './paginas/configuracao/configuracao.component';
 import { EFonePipe } from './pipes/e-fone.pipe';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { MensagemComponent } from './componentes/mensagem/mensagem.component';
+import { MensagemService } from './componentes/mensagem/mensagem.service';
 
 registerLocaleData(localePt, 'pt');
 
@@ -39,7 +41,8 @@ registerLocaleData(localePt, 'pt');
     SaldoPipe,
     RodapeComponent,
     ConfiguracaoComponent,
-    EFonePipe
+    EFonePipe,
+    MensagemComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,7 @@ registerLocaleData(localePt, 'pt');
     NgxMaskModule.forRoot(),
     ImageCropperModule
   ],
-  providers: [PontoService, {provide: LOCALE_ID, useValue: 'pt-BR'}],
+  providers: [PontoService, {provide: LOCALE_ID, useValue: 'pt-BR'}, MensagemService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
